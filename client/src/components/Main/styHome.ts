@@ -14,6 +14,8 @@ export const Container=styled.div`
         flex-direction: row;
         justify-content: space-around;
         padding:10px;
+        background-color:#dfe2e4;
+
     }
 
 `
