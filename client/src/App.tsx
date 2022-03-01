@@ -6,6 +6,8 @@ import {BrowserRouter,Routes,Route} from 'react-router-dom';
 import Login from './components/Login/Login';
 import Home from './components/Main/Home';
 import Nav from './components/Nav/Nav';
+import Course from './components/CourseDetail/Course';
+// import Create from './components/CreateCourse/Create';
 
 
 function App():JSX.Element{
@@ -15,6 +17,7 @@ function App():JSX.Element{
       <Routes>
           <Route path="/" element={<Login />} />
           <Route path='/home' element ={<Home/>}/>
+          <Route path='/courses/:id' element ={<Course/>}/>
           <Route path='/*' element ={<Home/>}/>
 
       </Routes>

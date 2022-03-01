@@ -4,10 +4,11 @@ export const Container=styled.div`
     width:100%;
     height:100vh;
     min-height: 100vh;
+    position:relative;
 
     main{
         height:auto;
-        border:2px solid orange;
+        /* border:2px solid orange; */
         margin-top:10px;
         display: flex;
         flex-wrap: wrap;
