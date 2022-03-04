@@ -9,3 +9,34 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User{
+  id        Int      @id @default(autoincrement())
+  createAt  DateTime @default(now())
+  updateAt  DateTime @updatedAt
+  name      String 
+  lastName  String
+  email     String   @unique 
+  password  String   @unique
+}
+
+model Course{
+  id Int @id @default(autoincrement())
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+  name String
+  content String
+  img Bytes @db.ByteA
+}
+
+model Archive{
+  id Int @id @default(autoincrement())
+  name String  
+  file Bytes @db.ByteA @unique
+}
+
+model Link{
+  id Int @id @default(autoincrement())
+  url String @unique
+
+}
