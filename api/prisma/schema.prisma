@@ -10,33 +10,46 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User{
-  id        Int      @id @default(autoincrement())
-  createAt  DateTime @default(now())
-  updateAt  DateTime @updatedAt
-  name      String 
-  lastName  String
-  email     String   @unique 
-  password  String   @unique
-}
-
-model Course{
-  id Int @id @default(autoincrement())
+model User {
+  id       Int      @id @default(autoincrement())
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
-  name String
-  content String
-  img Bytes @db.ByteA
+  name     String
+  lastName String
+  userName String   @unique
+  email    String   @unique
+  password String   @unique
+  course   Course[]
 }
 
-model Archive{
-  id Int @id @default(autoincrement())
-  name String  
-  file Bytes @db.ByteA @unique
+model Course {
+  id       Int       @id @default(autoincrement())
+  createAt DateTime  @default(now())
+  updateAt DateTime  @updatedAt
+  name     String
+  content  String?
+  img      Bytes?    @db.ByteA
+  user     User      @relation(fields: [userId], references: [id])
+  userId   Int
+  link     Link[]
+  archive  Archive[]
 }
 
-model Link{
-  id Int @id @default(autoincrement())
-  url String @unique
+model Archive {
+  id       Int      @id @default(autoincrement())
+  name     String
+  file     Bytes    @unique @db.ByteA
+  course   Course   @relation(fields: [courseId], references: [id])
+  courseId Int
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+}
 
+model Link {
+  id       Int      @id @default(autoincrement())
+  url      String   @unique
+  course   Course   @relation(fields: [courseId], references: [id])
+  courseId Int
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
 }
