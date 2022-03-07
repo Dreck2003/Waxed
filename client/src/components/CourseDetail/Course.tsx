@@ -1,9 +1,7 @@
 import Nav from '../Nav/Nav';
-import {Container,Content,Div} from './styCourse';
+import {Container,Content} from './styCourse';
 import Links from './Links/Links';
 import pdf from "/assets/react.pdf"
-import { Link } from 'react-router-dom';
-
 
 const Course=():JSX.Element=>{
 

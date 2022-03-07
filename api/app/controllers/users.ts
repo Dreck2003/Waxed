@@ -39,9 +39,11 @@ export const createUser= async(req: Request, res: Response, next: NextFunction)=
 
 
 }
+
 export const getUser= async(req: Request, res: Response, next: NextFunction)=>{
 
     const {password,userName} = req.body;
+    console.log(password,userName);
 
 
     try{

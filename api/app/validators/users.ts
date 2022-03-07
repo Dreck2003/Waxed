@@ -9,7 +9,7 @@ export const validateCreate=[
     check('userName').exists().not().isEmpty(),
     check('password').exists().not().isEmpty(),
     (req: Request, res: Response,next: NextFunction)=>{
-
+        console.log(req.body)
         validateResult(req, res, next);
 
     }

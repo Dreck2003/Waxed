@@ -9,8 +9,8 @@ console.log('ROUTER_USER')
 const router = Router();
 
 
-router.get('/',validateUser,getUser);
-router.post('/',validateCreate,createUser);
+router.post('/',validateUser,getUser);
+router.post('/create',validateCreate,createUser);
 
 
 module.exports=router;

@@ -3,7 +3,7 @@ import './App.css'
 import {BrowserRouter,Routes,Route} from 'react-router-dom';
 
 //============================================================================
-import Login from './components/Login/Login';
+import Login from './components/Forms/Forms';
 import Home from './components/Main/Home';
 import Nav from './components/Nav/Nav';
 import Course from './components/CourseDetail/Course';
@@ -19,7 +19,6 @@ function App():JSX.Element{
           <Route path='/home' element ={<Home/>}/>
           <Route path='/courses/:id' element ={<Course/>}/>
           <Route path='/*' element ={<Home/>}/>
-
       </Routes>
     </BrowserRouter>
   )

@@ -1,20 +1,16 @@
 import styled from 'styled-components';
 
-interface Props{
-    visible: boolean;
-}
 
-export const Modal=styled.aside<Props>`
+export const Aside=styled.div`
     position: fixed;
     right:0px;
     top:0px;
     bottom:0px;
-    width:400px;
+    /* width:400px; */
     height: 700px;
     background-color:#508cd3eb;
     z-index: 3;
     color:black;
-    visibility:${(props)=>(props.visible ?  'visible': 'hidden')};
     .btn-close{
         position: absolute;
         top: 3px;
@@ -31,6 +27,11 @@ export const Modal=styled.aside<Props>`
             background-color: #8cb2df;
         }
     }
+    aside{
+        transition: width 1s ease ;
+
+    }
+    
 
 `
 
@@ -45,7 +46,7 @@ export const Container=styled.div`
     }
 `
 
-export const Content=styled.section`
+export const Content=styled.form`
     width:96%;
     margin:50px 2%;
     height:500px;
