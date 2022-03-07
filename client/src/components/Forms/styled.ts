@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
-export  const Formulario=styled.form`
+export  const Formulario=styled.section`
     color:white;
     background-color: #5a8bc3;
     border-radius: 20px;
     width:400px;
-    height: 80vh;
+    /* height: 80vh; */
     box-shadow: 0px 0px 10px 5px #7caae0;
     position: relative;
     overflow: hidden;
@@ -14,7 +14,7 @@ export  const Formulario=styled.form`
 
     button{
         width:80%;
-        margin:5px 10%;
+        margin: 10px 10% 60px 10%;
         border:none;
         border-radius: 8px;
         padding:5px;
@@ -23,6 +23,11 @@ export  const Formulario=styled.form`
         font-weight:bold;
         cursor:pointer;
     }
+
+    .google{
+        opacity:0;
+    }
+
 `
 
 export const Header=styled.h3`
