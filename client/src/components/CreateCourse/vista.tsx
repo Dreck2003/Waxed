@@ -38,6 +38,9 @@ const Vista=({changeVisible,visible,look}:Prop):JSX.Element=>{
     
         if(event.target.name !== 'content'){
             setError(validator(error, event.target))
+        }else{
+
+            
         }
 
     }
@@ -51,12 +54,14 @@ const Vista=({changeVisible,visible,look}:Prop):JSX.Element=>{
         }
 
         const dataForm = new FormData(event.target);
+        console.log(dataForm.get('name'))
+        if (dataForm.get('content')!.length > 160){
+            alert('the course description should not be longer than 160 letters')
+        }
 
         sendCourse(URL,dataForm,(info:any)=>{
 
-            
-
-
+            console.log(info)
         })
 
     }
@@ -90,11 +95,11 @@ const Vista=({changeVisible,visible,look}:Prop):JSX.Element=>{
                             })
 
                         }} accept='.png,.jpg'  name='image'/>
-                        {/* <span id='file'>{file}</span> */}
 
                     </SubFile>
-                    <img src={img} />
-
+                    <div>
+                        <img src={img} />
+                    </div>
                     <button className='btn-crear'>Crear</button>
                 </Content>
 
