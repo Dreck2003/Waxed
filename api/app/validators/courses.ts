@@ -1,17 +1,13 @@
-import {check} from 'express-validator';
 import {Request,Response,NextFunction} from 'express' ;
-import {validateResult} from '../helpers/validateHelper';
 
 
+const validateCreateCourse = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
 
-export const validateCreateCourse=[
-    check('name').exists().notEmpty(),
-    check('content').isString(),
-    check('userName').exists().notEmpty(),
-    (req: Request, res: Response,next: NextFunction) =>{
-        validateResult(req,res,next);
+    const {name}=req.body;
 
-    }
-    
-]
+};
 

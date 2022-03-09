@@ -53,6 +53,12 @@ export const Content=styled.form`
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+
+
+    span{
+        text-align: center;
+        color: white;
+    }
     header{
         width:100%;
         height:20px;
@@ -70,6 +76,17 @@ export const Content=styled.form`
         border: 1px solid #ccd2da;
         padding:6px;
 
+    }
+    div{
+        width:100%;
+        height:100px;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        img{
+            width:80%;
+            height: 100%;
+        }
     }
 
 `

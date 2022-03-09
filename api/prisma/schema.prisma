@@ -28,7 +28,6 @@ model Course {
   updateAt DateTime  @updatedAt
   name     String
   content  String?
-  img      Bytes?    @db.ByteA
   user     User      @relation(fields: [userId], references: [id])
   userId   Int
   link     Link[]
@@ -38,7 +37,6 @@ model Course {
 model Archive {
   id       Int      @id @default(autoincrement())
   name     String
-  file     Bytes    @unique @db.ByteA
   course   Course   @relation(fields: [courseId], references: [id])
   courseId Int
   createAt DateTime @default(now())

@@ -1,7 +1,7 @@
 import Nav from '../Nav/Nav';
 import Card from '../CardCourse/Card';
 import {Container} from './styHome';
-import { useEffect,useContext } from 'react';
+import { useEffect,useContext} from 'react';
 import AuthContext from '../../context/authContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -18,13 +18,18 @@ const Home =():JSX.Element=>{
             console.log(context)
             console.log('usuario no registrado')
             navigate('/')
-
         }
-    },[context])
+        //Entonces existe el usuario:
+
+        
+
+
+
+    },[context.user])
 
     return(
         <Container>
-            {console.log(context)}
+            {console.log('home renderizado')}
             <Nav/>
             <main>
                 <Card/>

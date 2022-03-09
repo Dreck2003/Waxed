@@ -24,7 +24,7 @@ import Login from './Login';
                     <Register/>
                 }
                 <ChangeForm onClick={()=>changeForm(!form)}>
-                    {form ? <span>Register</span>:<span>Login</span>}
+                    {form ? <span>Sign Up</span>:<span>Login</span>}
                 </ChangeForm> 
             </Formulario>
         </Container>
