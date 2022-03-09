@@ -1,4 +1,10 @@
 
+import { useNavigate } from 'react-router-dom';
+
+import { ProviderUser } from '../interfaces/interfaces';
+
+
+
 
 interface Login{
   userName:string,
@@ -15,7 +21,7 @@ interface Register{
 
 }
 
-type Form = Login | Register
+type Form = Login | Register | any
 
 
 export const validator=(error:any,input:HTMLInputElement):Form=>{
@@ -64,8 +70,8 @@ export const validator=(error:any,input:HTMLInputElement):Form=>{
           ...error,
           [name]: '',
         };
-
         break;
+
         
       case "email":
         // let val = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -87,6 +93,7 @@ export const validator=(error:any,input:HTMLInputElement):Form=>{
         default:
             break;
     }
+        
 
     if (!value) {
       errors = {
@@ -126,3 +133,58 @@ export const validateInfo=(error:any,input:any):string[]=>{
     return result
 }
 
+export const sendInfo = (
+  url: string,
+  inputData: any,
+  context: ProviderUser,
+  navigate: any,
+  to:string
+) => {
+  fetch(url, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(inputData),
+  })
+    .then((res) => {
+      console.log(res.status);
+      if (res.status === 403) alert("The user does not exist");
+      return res.json();
+    })
+    .then((data) => {
+      if (!data.error) {
+        context.changeUser(data.name, data.lastName, data.userName);
+        alert("Correct user");
+        navigate(to);
+      } else {
+        alert(data.error);
+      }
+      console.log(data);
+    });
+};
+
+
+export const sendCourse=(url:string,form:any,cb:any)=>{
+
+  fetch(url, {
+    method: "POST",
+    mode: "cors",
+    body:form,
+  })
+    .then((res) => {
+      console.log(res)
+      return res.json()
+    })
+    .then((data) => {
+      console.log(data);
+      cb(data)
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+
+
+}

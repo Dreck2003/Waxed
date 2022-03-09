@@ -1,12 +1,16 @@
 import { Router } from "express";
-import {getCourses,createCourse} from '../controllers/courses';
-import {validateCreateCourse} from '../validators/courses';
+import { getCourses, createCourse, subirFile } from "../controllers/courses";
+// import { validateCreateCourse } from "../validators/courses";
+
 
 const router = Router();
+const other=()=>{
+    console.log('paso por aqui wajajwaja')
+}
 
 router.get('/',getCourses);
 
-router.post('/',validateCreateCourse,createCourse);
+router.post("/", subirFile,other, createCourse);
 
 
 

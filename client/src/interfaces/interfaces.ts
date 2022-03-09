@@ -6,6 +6,17 @@ export interface Course{
 }
 
 
+export interface Link{
+    url:string,
+    name:string
+    cursoId:number
+}
+export interface Archive {
+    name: string;
+    userName: string;
+    cursoId: number;
+    file:any
+}
 
 export interface User{
     name:string,

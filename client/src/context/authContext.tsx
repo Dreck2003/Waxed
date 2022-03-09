@@ -6,7 +6,7 @@ interface Prop{
     children:JSX.Element | JSX.Element[]
 }
 
-const setUsuario:ProviderUser ={
+ const setUsuario:ProviderUser ={
     User_info:null,
     user:false,
     changeUser:()=>{}
@@ -24,18 +24,19 @@ const AuthContext=createContext<ProviderUser>({} as ProviderUser);
 
 export const AuthProvider=({children}:Prop)=>{
 
-    const [user,setUser]=useState<User>(usuario)
+    const [user,setUser]=useState<User>(usuario);
+    const [auth,setAuth]=useState(setUsuario.user)
 
     const changeUser=(name:string,lastName:string,userName:string)=>{
         setUser({
             ...user,
             name, lastName, userName
         })
-        setUsuario.user=true;
+        setAuth(!auth)
     }
 
     return (
-        <AuthContext.Provider value={{ User_info:user,user:false,changeUser}}>
+        <AuthContext.Provider value={{ User_info:user,user:auth,changeUser}}>
             {children}
         </AuthContext.Provider>
     )

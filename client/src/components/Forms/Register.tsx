@@ -1,9 +1,14 @@
-import {useState} from 'react';
+import {useState,useContext, useEffect} from 'react';
 import {Header,Input,GroupRow,GroupCol}from './styled';
 import { validator, validateInfo } from '../../helpers/validateForm';
+import AuthContext from '../../context/authContext';
+import { useNavigate } from 'react-router-dom';
 
 
 const Register =():JSX.Element=>{
+
+    const context=useContext(AuthContext);
+    const navigate=useNavigate();
 
     const [inputRegister, setRegister] = useState({
         name: '',
@@ -19,6 +24,13 @@ const Register =():JSX.Element=>{
         userName: '',
         password: ''
     })
+
+    useEffect(()=>{
+        if(context.user){
+            navigate('/home')
+        }
+
+    },[context.user])
 
 
     return(
@@ -56,6 +68,14 @@ const Register =():JSX.Element=>{
                         return res.json()
                     })
                     .then(data => {
+
+                        if(!data.error){
+                            context.changeUser(data.name,data.lastName,data.userName)
+                            alert('Create user')
+                            navigate('/home')
+                        }else{
+                            alert(data.error)
+                        }
                         console.log(data)
 
                     })
@@ -67,6 +87,7 @@ const Register =():JSX.Element=>{
 
 
         >
+            {console.log('Register renderizado')}
             <Header>Sign Up</Header>
             <GroupRow>
                 <Input type='text' placeholder='First Name...' name='name'/>
@@ -81,10 +102,10 @@ const Register =():JSX.Element=>{
             </GroupCol> 
                 
             <GroupCol>
-                <label style={{display: 'flex', justifyContent: 'center',alignItems: 'center',marginBottom:'10px'}}>
+                {/* <label style={{display: 'flex', justifyContent: 'center',alignItems: 'center',marginBottom:'10px'}}>
                     <input type='checkbox' style={{marginRight:'5px'}}/>
                 I    accept the Terms of Use & Privacy Policy
-                 </label>
+                 </label> */}
                 <button>
                     Submit
                 </button>
