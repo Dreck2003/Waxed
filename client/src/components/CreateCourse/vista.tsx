@@ -1,6 +1,9 @@
 import {useState} from 'react';
-import { Aside, Content, Input, TextArea, SubFile } from './stCreate';
-import {sendCourse, validateInfo, validator} from '../../helpers/validateForm';
+import { Aside, Content, Input, TextArea, SubFile, Buttons } from './stCreate';
+import { validateInfo, validator} from '../../helpers/validateForm';
+import { useDispatch } from 'react-redux';
+import { createCourse } from '../../redux/actions/course';
+
 
 interface Prop{
     changeVisible:any,
@@ -11,10 +14,25 @@ interface Course{
     name:string,
     content?:string,
 }
+
+export interface Curso {
+    name: string;
+    content: string | null;
+    img?: any;
+    // id:number,
+    files: string[] | [];
+    links: string[] | [];
+    lastSeen: Date;
+}
+
+
+
 const URL: string ='http://localhost:3001/api/courses'
 
 
 const Vista=({changeVisible,visible,look}:Prop):JSX.Element=>{
+
+    const dispatch=useDispatch();
     
     const [img,setImg]=useState<any>(null);
     const [input,setInput]=useState<Course>({
@@ -48,26 +66,60 @@ const Vista=({changeVisible,visible,look}:Prop):JSX.Element=>{
     const handleSubmit=(event:any)=>{
         event.preventDefault();
         console.log('se hace la solicitud')
+        console.log('fomr: ',event)
 
         if (validateInfo(error, input).length > 0) {
            return alert('existen erroes o faltan campos a completar')
         }
 
-        const dataForm = new FormData(event.target);
-        console.log(dataForm.get('name'))
-        if (dataForm.get('content')!.length > 160){
-            alert('the course description should not be longer than 160 letters')
+        if (event.target.content.value.length > 160){
+            alert('The course description should not be longer than 160 letters')
         }
 
-        sendCourse(URL,dataForm,(info:any)=>{
+        let curso:Curso={
+            name: input.name,
+            content: event.target.content.value,
+            img:event.target.image.files[0],
+            files: [],
+            links: [],
+            lastSeen: new Date(),
+        }
 
-            console.log(info)
+        dispatch(createCourse(input.name,curso));
+
+        //Reseteo de las inputs jajaja
+
+        event.target.content.value='';
+        event.target.name.value = '';
+
+        setInput({
+            ...input,
+            name:''
         })
+        setImg(null);
+        const files = Array.from(event.target.image.files)
+        files[0]=undefined;
+
 
     }
 
+    const reseteo=(event:any)=>{
+
+        setInput({
+            ...input,
+            name: ''
+        })
+        setImg('');
+        console.log(event);
+        console.log(input)
+        console.log(img)
+
+    }
+    
+
     return (
         <Aside >
+            {console.log('vista renderizada')}
             <aside style={{ width: width }}>
                 <button onClick={() => changeVisible(!visible)} className="btn-close" style={{ display: widthButton }}>
                     -¬
@@ -98,9 +150,12 @@ const Vista=({changeVisible,visible,look}:Prop):JSX.Element=>{
 
                     </SubFile>
                     <div>
-                        <img src={img} />
+                        {img ? <img src={img} />: <span>preview of the image</span>}
                     </div>
-                    <button className='btn-crear'>Crear</button>
+                    <Buttons>
+                        <button className='btn-crear' >Crear</button>
+                        <input className='btn-crear' type='reset' value='Reset' onClick={reseteo}/>
+                    </Buttons>
                 </Content>
 
             </aside>

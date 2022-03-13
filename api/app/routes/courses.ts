@@ -12,7 +12,7 @@ const other=(req: Request, res: Response, next: NextFunction)=>{
 
 router.get('/',getCourses);
 
-router.post("/", subirFile, validateCreateCourse, createCourse);
+router.post("/", validateCreateCourse, createCourse);
 
 
 

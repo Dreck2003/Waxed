@@ -145,3 +145,10 @@ export const SubFile=styled.label`
         font-weight: bold;
     }
 `
+
+
+export const Buttons=styled.section`
+    width: 100%;
+    display:grid;
+    grid-template-columns: 1fr 1fr ;
+`

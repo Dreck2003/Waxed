@@ -1,20 +1,29 @@
 
 import {Course,Informer,Visto} from './styCard';
 import { useNavigate } from 'react-router-dom';
-const Card=():JSX.Element=>{
+
+interface Prop{
+    img:string,
+    info:string,
+    name:string
+}
+
+const Card=({img,info,name}:Prop):JSX.Element=>{
     const navigate=useNavigate();
     const id:number=3;
+
+    const urlImg = img ? img : 'assets/images/default.jpg' 
 
     return (
         <Course onClick={()=>{navigate(`/courses/${id}`)}}>
             <div className="imagen">
-                <img src='assets/images/default.jpg' alt='img_default'/>
-               <div className="encima">IMAGE NOT FOUND</div> 
+                <img src={urlImg} alt='img_default'/>
+               {/* <div className="encima">IMAGE NOT FOUND</div>  */}
             </div>
             <Informer>
-                <h3>MATEMATICA</h3>
+                <h3>{name}</h3>
                 <div className="description">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique nisi doloremque delectus architecto minus tempore illo voluptatum sequi nihil? 
+                    {info} 
                 </div>
             </Informer> 
             <Visto>

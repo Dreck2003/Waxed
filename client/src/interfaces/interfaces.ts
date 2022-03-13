@@ -1,8 +1,11 @@
-export interface Course{
-    name:string,
-    content:string,
-    img?:string,
-    userName:string
+export interface Course {
+  name: string;
+  content: string | null;
+  img?: string | null;
+  // id:number,
+  files: string[] | [];
+  links: string[] | [];
+  lastSeen:Date;
 }
 
 

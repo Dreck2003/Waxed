@@ -1,17 +1,19 @@
-import GoogleLogin from 'react-google-login';
-import { useState,useContext,useEffect } from 'react';
+// import GoogleLogin from 'react-google-login';
+import { useState,useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { validator, validateInfo,sendInfo} from '../../helpers/validateForm';
+import Storage from '../../helpers/LocalStore';
 // import { succes, failed } from './helper';
 import { Input, GroupCol, Header } from './styled';
-import AuthContext from '../../context/authContext';
+import { getUser } from '../../redux/actions/user';
 
 
 
 const Login = () => {
     const navigate = useNavigate();
-    const contextAuth=useContext(AuthContext);
+    const dispatch=useDispatch();
 
     const [inputLogin, setLogin] = useState({
         userName: '',
@@ -26,10 +28,15 @@ const Login = () => {
     useEffect(()=>{
         console.log('login')
 
-        if(contextAuth.user){
-            navigate('/home')
-        }
     },[])
+
+    const sendSubmit=(event:React.ChangeEvent<HTMLFormElement>)=>{
+        event.preventDefault();
+
+        console.log('36- enviando los datos del login')
+        dispatch(getUser(inputLogin));
+
+    }
 
 
     return (
@@ -45,16 +52,7 @@ const Login = () => {
             setError(validator(error,input))
             // console.log(error)
         }}
-        onSubmit={(event) => {
-            event.preventDefault();
-            const [resError,resFields]=validateInfo(error,inputLogin)
-            
-            if(!resError && !resFields) {
-                
-                sendInfo('http://localhost:3001/api/users',inputLogin,contextAuth,navigate,'/home')
-            }
-
-        }}
+            onSubmit={sendSubmit}
         >
             {console.log('login renderizado')}
             <Header>Login</Header>

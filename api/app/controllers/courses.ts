@@ -1,14 +1,23 @@
 import {Request,Response,NextFunction} from 'express';
 import prisma from '../models/prisma';
 import multer from 'multer';
+import fs from 'fs';
 // import { createDiffieHellman } from 'crypto';
 
 
 var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads");
+  destination: function (req:Request,file, cb) {
+
+    const {userName}=req.body;
+    console.log(req.body)
+    const path=`uploads/${userName}/jpg`;
+    if (!(fs.existsSync(path))){
+      fs.mkdirSync(path, { recursive: true });
+    } 
+
+    cb(null, path);
   },
-  filename: function (req, file, cb) {
+  filename: function (req:Request, file, cb) {
       console.log(file)
     cb(null, `${Date.now()}-${file.originalname}`);
   },
@@ -29,8 +38,8 @@ export const getCourses= async (req: Request, res: Response, next: NextFunction)
 export const createCourse= async (req: any, res: Response, next: NextFunction)=>{
 
     console.log(req.body)
-    const {name,content,userName}=req.body;
-    return res.json({error:'algo paso'})
+    const {name,content,userName,img}=req.body;
+    return res.json({img:img});
 
     // try{
 
