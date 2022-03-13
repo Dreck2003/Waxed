@@ -11,12 +11,17 @@ export const Container=styled.div`
         /* border:2px solid orange; */
         margin-top:10px;
         display: flex;
+        align-items:center;
         flex-wrap: wrap;
         flex-direction: row;
         justify-content: space-around;
         padding:10px;
         background-color:#dfe2e4;
+        min-height:100vh ;
 
+        span{
+            /* color:white; */
+        }
     }
 
 `

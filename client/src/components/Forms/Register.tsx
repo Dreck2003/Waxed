@@ -1,13 +1,11 @@
 import {useState,useContext, useEffect} from 'react';
 import {Header,Input,GroupRow,GroupCol}from './styled';
 import { validator, validateInfo } from '../../helpers/validateForm';
-import AuthContext from '../../context/authContext';
 import { useNavigate } from 'react-router-dom';
 
 
 const Register =():JSX.Element=>{
 
-    const context=useContext(AuthContext);
     const navigate=useNavigate();
 
     const [inputRegister, setRegister] = useState({
@@ -26,11 +24,8 @@ const Register =():JSX.Element=>{
     })
 
     useEffect(()=>{
-        if(context.user){
-            navigate('/home')
-        }
-
-    },[context.user])
+        
+    },[])
 
 
     return(
@@ -54,31 +49,7 @@ const Register =():JSX.Element=>{
             console.log(resError,resFields)
 
             if (!resError && !resFields) {
-                fetch('http://localhost:3001/api/users/create', {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(inputRegister)
-                })
-                    .then(res => {
-                        console.log(res.status)
-                        if (res.status === 403) alert('The user does not exist')
-                        return res.json()
-                    })
-                    .then(data => {
-
-                        if(!data.error){
-                            context.changeUser(data.name,data.lastName,data.userName)
-                            alert('Create user')
-                            navigate('/home')
-                        }else{
-                            alert(data.error)
-                        }
-                        console.log(data)
-
-                    })
+                //Aca vendria el llamado a la api
             }
 
         }}
