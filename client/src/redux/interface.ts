@@ -7,6 +7,7 @@ export enum Datatypes {
   GET_FILES,
   CREATE_LINK,
   GET_LINKS,
+  FIND_COURSE
 }
 
 export interface Course {
@@ -14,8 +15,8 @@ export interface Course {
   content: string | null;
   img?: string | null | any;
   // id:number,
-  files: string[] | [];
-  links: string[] | [];
+  files: Archive[]| any;
+  links: Link[] | [];
   lastSeen: Date;
 }
 
@@ -23,13 +24,12 @@ export interface Course {
 export interface Link {
   url: string;
   name: string;
-  cursoId: number;
+  cursoId: string;
 }
 export interface Archive {
   name: string;
-  userName: string;
-  cursoId: number;
-  file: any;
+  cursoId: string;
+  file: string;
 }
 
 export interface User {
@@ -39,6 +39,12 @@ export interface User {
   password: string;
   email: string;
 }
+
+export interface CourseDetail{
+  links:Link[],
+  files:Archive[]
+}
+
 
 
 
@@ -85,6 +91,12 @@ export interface GET_FILES {
   payload: Archive[];
 }
 
+export interface FIND_COURSE {
+  type: Datatypes.FIND_COURSE;
+  payload: CourseDetail;
+}
+
+
 
 export  type Actions= CREATE_USER | GET_USER | GET_FILES | CREATE_FILE | CREATE_COURSE | GET_COURSES 
- | CREATE_LINK | GET_LINKS ;
+ | CREATE_LINK | GET_LINKS | FIND_COURSE ;
