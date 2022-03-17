@@ -5,10 +5,11 @@ import { useNavigate } from 'react-router-dom';
 interface Prop{
     img:string,
     info:string,
-    name:string
+    name:string,
+    actualizado:Date
 }
 
-const Card=({img,info,name}:Prop):JSX.Element=>{
+const Card=({img,info,name,actualizado}:Prop):JSX.Element=>{
     const navigate=useNavigate();
 
     const urlImg = img ? img : 'assets/images/default.jpg' 
@@ -26,7 +27,7 @@ const Card=({img,info,name}:Prop):JSX.Element=>{
                 </div>
             </Informer> 
             <Visto>
-                ACtualizacion tal: fjkrngn
+                {actualizado.toString()}
             </Visto>
         </Course>
     )

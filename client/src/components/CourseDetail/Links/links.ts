@@ -20,12 +20,12 @@ export const List = styled.div`
         height: 100px;
       }
       100% {
-        height: 100%;
+        height: 200px;
       }
     }
     @keyframes cerrar {
       0% {
-        height: 100%;
+        height: 200px;
       }
       50% {
         height: 100px;
@@ -49,6 +49,10 @@ export const List = styled.div`
         margin: 0px 5px;
         cursor:pointer;
         
+      }
+
+      span{
+        cursor:pointer;
       }
     }
 

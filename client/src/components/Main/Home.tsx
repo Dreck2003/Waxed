@@ -29,7 +29,7 @@ const Home =():JSX.Element=>{
                 {estado ? estado.map((curso,index)=>{
                     // console.log(curso)
                         return(
-                            <Card key={index} img={curso.img!} info={curso.content!} name={curso.name!}/>
+                            <Card key={index} img={curso.img!} info={curso.content!} name={curso.name!} actualizado={curso.lastSeen}/>
                         )
                     })
                     :

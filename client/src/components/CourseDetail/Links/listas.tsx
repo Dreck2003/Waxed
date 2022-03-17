@@ -13,14 +13,14 @@ const Links=():JSX.Element=>{
     const estado=useSelector((state:State)=>state.courseDetail)
     console.log(estado)
 
-    const namesOfLinks=estado.links;
-    const namesOfFiles=estado.files;
+    // const namesOfLinks=estado.links;
 
 
     return(
         <Container className="item-grid">
-            <ListLink links={namesOfLinks} nameTitle='links' />
-            <ListFile files={namesOfFiles} nameTitle='Files' />
+            <ListLink  nameTitle='links' />
+            <ListFile  nameTitle='Files' />
+            <hr/>
 
         </Container>
     )
