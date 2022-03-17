@@ -1,15 +1,63 @@
-import { Actions,Course,Datatypes } from "../interface"
+import { Actions,CourseDetail,Datatypes } from "../interface";
+
+const initialCourseDetail:CourseDetail = {
+    links: [],
+    files: []
+}
 
 
-export const courseReducer = (state: Course[] = [], action: Actions):Course[] => {
-  switch (action.type) {
-    case Datatypes.CREATE_COURSE:
-      return state.concat(action.payload)
+export const courseDetailReducer=(state=initialCourseDetail,action:Actions):CourseDetail=>{
 
-    case Datatypes.GET_COURSES:
-      return action.payload;
+    switch(action.type){
 
-    default:
-      return state;
-  }
-};
+        case Datatypes.FIND_COURSE:
+
+            return action.payload;
+
+        case Datatypes.CREATE_FILE:
+
+            return {
+                ...state,
+                files:state.files.concat(action.payload)
+            }
+
+        case Datatypes.UPDATE_FILE:
+
+            return {
+                ...state,
+                files:action.payload
+            }
+
+        case Datatypes.DELETE_FILE:
+
+            return {
+                ...state,
+                files:action.payload
+            }
+
+        case Datatypes.CREATE_LINK:
+
+            return {
+                ...state,
+                links:state.links.concat(action.payload)
+            }
+
+        case Datatypes.UPDATE_LINK:
+
+            return {
+                ...state,
+                links:action.payload
+            }
+
+        case Datatypes.DELETE_LINK:
+
+            return {
+                ...state,
+                links:action.payload
+            }
+
+        default:
+            return state;
+
+    }
+}

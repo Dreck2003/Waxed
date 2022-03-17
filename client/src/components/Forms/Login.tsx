@@ -1,18 +1,14 @@
 // import GoogleLogin from 'react-google-login';
 import { useState,useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 
-import { validator, validateInfo,sendInfo} from '../../helpers/validateForm';
-import Storage from '../../helpers/LocalStore';
-// import { succes, failed } from './helper';
+import { validator,} from '../../helpers/validateForm';
 import { Input, GroupCol, Header } from './styled';
 import { getUser } from '../../redux/actions/user';
 
 
 
 const Login = () => {
-    const navigate = useNavigate();
     const dispatch=useDispatch();
 
     const [inputLogin, setLogin] = useState({
