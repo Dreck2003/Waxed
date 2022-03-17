@@ -6,7 +6,6 @@ const initialCourseDetail:CourseDetail = {
 }
 
 
-
 export const courseDetailReducer=(state=initialCourseDetail,action:Actions):CourseDetail=>{
 
     switch(action.type){
@@ -22,11 +21,43 @@ export const courseDetailReducer=(state=initialCourseDetail,action:Actions):Cour
                 files:state.files.concat(action.payload)
             }
 
+        case Datatypes.UPDATE_FILE:
+
+            return {
+                ...state,
+                files:action.payload
+            }
+
+        case Datatypes.DELETE_FILE:
+
+            return {
+                ...state,
+                files:action.payload
+            }
+
+        case Datatypes.CREATE_LINK:
+
+            return {
+                ...state,
+                links:state.links.concat(action.payload)
+            }
+
+        case Datatypes.UPDATE_LINK:
+
+            return {
+                ...state,
+                links:action.payload
+            }
+
+        case Datatypes.DELETE_LINK:
+
+            return {
+                ...state,
+                links:action.payload
+            }
 
         default:
             return state;
 
-
     }
-
 }

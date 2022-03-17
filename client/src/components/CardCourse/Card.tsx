@@ -10,12 +10,11 @@ interface Prop{
 
 const Card=({img,info,name}:Prop):JSX.Element=>{
     const navigate=useNavigate();
-    const id:number=3;
 
     const urlImg = img ? img : 'assets/images/default.jpg' 
 
     return (
-        <Course onClick={()=>{navigate(`/courses/${id}`)}}>
+        <Course onClick={()=>{navigate(`/courses/${name}`)}}>
             <div className="imagen">
                 <img src={urlImg} alt='img_default'/>
                {/* <div className="encima">IMAGE NOT FOUND</div>  */}

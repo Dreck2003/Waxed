@@ -27,48 +27,23 @@ export const Container=styled.section`
        
        
     }
-
-    .list{
+    .icons{
+        padding: 0px 10px;
         display: flex;
-        flex-direction: column;
-        overflow-y: scroll;
-        overflow-x: hidden;
-        height:200px;
-        width:100%;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
 
-        @keyframes open{
-            0%{
-                height:0px;
-                
-            }
-            50%{
-                height:100px;
-                
-
-            }
-            100%{
-                height:200px;
-
-            }
-        };
-        @keyframes cerrar{
-            0%{
-                height:200px;
-                
-            }
-            50%{
-                height:100px;
-                
-
-            }
-            100%{
-                height:0px;
-
-            }
-        };
-
-        
+        img{
+            margin: 0px 8px;
+        }
     }
+    //EStilos del desplegable
+    .containerList{
+        position: relative;
+    }
+    
+
 
 `
 

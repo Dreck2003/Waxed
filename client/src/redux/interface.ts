@@ -4,10 +4,12 @@ export enum Datatypes {
   GET_COURSES,
   CREATE_COURSE,
   CREATE_FILE,
-  GET_FILES,
+  UPDATE_FILE,
+  DELETE_FILE,
   CREATE_LINK,
-  GET_LINKS,
-  FIND_COURSE
+  UPDATE_LINK,
+  DELETE_LINK,
+  FIND_COURSE,
 }
 
 export interface Course {
@@ -45,9 +47,6 @@ export interface CourseDetail{
   files:Archive[]
 }
 
-
-
-
 export interface CREATE_USER{
     type:Datatypes.CREATE_USER,
     payload:User
@@ -58,12 +57,15 @@ export interface GET_USER {
   payload: User;
 }
 
-
 export interface CREATE_COURSE {
   type: Datatypes.CREATE_COURSE;
   payload: Course;
 }
 
+export interface FIND_COURSE {
+  type: Datatypes.FIND_COURSE;
+  payload: CourseDetail;
+}
 export interface GET_COURSES {
   type: Datatypes.GET_COURSES;
   payload: Course[];
@@ -75,28 +77,36 @@ export interface CREATE_LINK {
   payload: Link;
 }
 
-
-export interface GET_LINKS {
-  type: Datatypes.GET_LINKS;
+export interface UPDATE_LINK{
+  type: Datatypes.UPDATE_LINK;
   payload: Link[];
 }
 
+export interface DELETE_LINK {
+  type: Datatypes.DELETE_LINK;
+  payload: Link[];
+}
+
+
+
+//==============================
 export interface CREATE_FILE {
   type: Datatypes.CREATE_FILE;
   payload: Archive;
 }
 
-export interface GET_FILES {
-  type: Datatypes.GET_FILES;
-  payload: Archive[];
+export interface UPDATE_FILES{
+  type:Datatypes.UPDATE_FILE,
+  payload:Archive[]
 }
-
-export interface FIND_COURSE {
-  type: Datatypes.FIND_COURSE;
-  payload: CourseDetail;
+export interface DELETE_FILE{
+  type:Datatypes.DELETE_FILE,
+  payload:Archive[]
 }
+//================================
 
 
 
-export  type Actions= CREATE_USER | GET_USER | GET_FILES | CREATE_FILE | CREATE_COURSE | GET_COURSES 
- | CREATE_LINK | GET_LINKS | FIND_COURSE ;
+
+export  type Actions= CREATE_USER | GET_USER  | CREATE_FILE | UPDATE_FILES | DELETE_FILE|CREATE_COURSE | GET_COURSES 
+ | CREATE_LINK | DELETE_LINK | UPDATE_LINK |FIND_COURSE ;
