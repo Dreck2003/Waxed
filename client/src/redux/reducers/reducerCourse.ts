@@ -2,7 +2,11 @@ import { Actions,CourseDetail,Datatypes } from "../interface";
 
 const initialCourseDetail:CourseDetail = {
     links: [],
-    files: []
+    files: [], 
+    seeFile:{
+        name:'',
+        url:''
+    },
 }
 
 
@@ -12,7 +16,10 @@ export const courseDetailReducer=(state=initialCourseDetail,action:Actions):Cour
 
         case Datatypes.FIND_COURSE:
 
-            return action.payload;
+            return {
+                ...state,
+                ...action.payload
+            };
 
         case Datatypes.CREATE_FILE:
 
@@ -30,10 +37,28 @@ export const courseDetailReducer=(state=initialCourseDetail,action:Actions):Cour
 
         case Datatypes.DELETE_FILE:
 
+        const oldFileName = action.payload;
+        console.log(oldFileName)
+
+        const files = state.files.filter((file) => file.name !== oldFileName.name);
+
+        if(state.seeFile.name === oldFileName.name){
+            return {
+              ...state,
+              files: files,
+              seeFile:{
+                  name:'',
+                  url:''
+
+              }
+            };
+        }
+
             return {
                 ...state,
-                files:action.payload
+                files:files
             }
+
 
         case Datatypes.CREATE_LINK:
 
@@ -43,17 +68,36 @@ export const courseDetailReducer=(state=initialCourseDetail,action:Actions):Cour
             }
 
         case Datatypes.UPDATE_LINK:
-
+            
             return {
                 ...state,
                 links:action.payload
             }
 
         case Datatypes.DELETE_LINK:
+            
+
 
             return {
                 ...state,
                 links:action.payload
+            }
+
+        case Datatypes.GET_FILE:
+
+            return {
+                ...state,
+                seeFile:action.payload
+            }
+
+        case Datatypes.CLEAN_FILE:
+
+            return {
+                ...state,
+                seeFile:{
+                    name:'',
+                    url:''
+                }
             }
 
         default:

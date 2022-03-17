@@ -88,7 +88,8 @@ export const updateLink=(name:string,courseId:string)=>{
 
 
 
-export const deleteFile = (name: string, courseId: string) => {
+export const deleteLink = (name: string, courseId: string) => {
+    // console.log('los links se van a borrar wajajwaja');
   return async (dispatch: Dispatch) => {
     try {
       const curso: Curso = await localforage.getItem(courseId);
@@ -100,11 +101,16 @@ export const deleteFile = (name: string, courseId: string) => {
           ...curso,
           links:links
       });
+    // console.log("los links se guardaron el local storage");
+
 
       dispatch({
-        type: Datatypes.DELETE_FILE,
+        type: Datatypes.DELETE_LINK,
         payload: links,
       });
+
+        // console.log("los links se despacharon");
+
 
     } catch (error) {
       console.error("error en delete File- ", error);

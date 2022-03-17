@@ -5,7 +5,9 @@ import localforage from 'localforage';
 type Curso = Course | null;
 
 
-export const createFile = (name: string, cursoId: string, file: string) => {
+export const createFile = (name: string, cursoId: string, file: File) => {
+
+  const Read=new FileReader();
   return async (dispatch: Dispatch) => {
     try {
       //Buscamos el curso con ese nombre
@@ -18,23 +20,33 @@ export const createFile = (name: string, cursoId: string, file: string) => {
       if (names.includes(name)) {
         alert("The file exist");
       } else {
-        const newCurso = {
-          ...curso,
-          files: curso!.files.concat({
-            name: name,
-            cursoId: cursoId,
-            file: file,
-          }),
-        };
-        //Actualizamos el curso y lo despachamos
 
-        const creado = await localforage.setItem(cursoId, newCurso);
-        console.log("creado file: ", creado);
+        //Si existe lo leemos y lo guardamos XD:
 
-        dispatch({
-          type: Datatypes.CREATE_FILE,
-          payload: { name: name, cursoId: cursoId, file: file },
-        });
+        Read.readAsDataURL(file);
+
+        Read.addEventListener('load',async(event: any) => {
+
+          const newCurso = {
+            ...curso,
+            files: curso!.files.concat({
+              name: name,
+              cursoId: cursoId,
+              file: event.target.result,
+            }),
+          };
+
+          //Actualizamos el curso y lo despachamos
+          const creado = await localforage.setItem(cursoId, newCurso);
+          console.log("creado file: ", creado);
+  
+          dispatch({
+            type: Datatypes.CREATE_FILE,
+            payload: { name: name, cursoId: cursoId, file: event.target.result },
+          });
+
+        })
+
       }
     } catch (err) {
       console.error(" course Detail -41- ", err);
@@ -43,7 +55,6 @@ export const createFile = (name: string, cursoId: string, file: string) => {
 };
 
 export const updateFile=(name:string,courseId:string)=>{
-
 
     return async(dispatch:Dispatch)=>{
 
@@ -106,6 +117,7 @@ export const deleteFile=(name:string,courseId:string)=>{
       const curso:Curso=await localforage.getItem(courseId);
 
       const files=curso!.files.filter((file:Archive) => file.name !== name);
+      const oldFile=curso!.files.find((file:Archive) => file.name == name)
 
       const newCourse={
         ...curso,
@@ -116,7 +128,7 @@ export const deleteFile=(name:string,courseId:string)=>{
 
       dispatch({
         type:Datatypes.DELETE_FILE,
-        payload:files
+        payload:oldFile
       })
 
 
@@ -124,6 +136,58 @@ export const deleteFile=(name:string,courseId:string)=>{
 
       console.error('error en delete File- ',error);
     }
+  }
+
+}
+
+export const getFileData=(courseId:string,name:string) => {
+
+  // const Read=new FileReader();
+
+  return async(dispatch:Dispatch)=>{
+
+      try {
+
+        //Buscamos el curso:
+        const curso: Curso = await localforage.getItem(courseId);
+
+        //Filtramos por el nombre del archivo:
+        const fileToRead = curso!.files.find(
+          (file: Archive) => file.name === name
+        );
+
+        if(fileToRead){
+
+          dispatch({
+            type: Datatypes.GET_FILE,
+            payload: {
+              name: fileToRead.name,
+              url: fileToRead.file,
+            },
+          });
+          // Read.readAsDataURL(fileToRead.file);
+
+          // Read.addEventListener('load',(event)=>{
+            // console.log('evnto de lectura: ',event);
+
+
+        }else{
+          alert('File Not Found')
+        }
+          
+      } catch (error) {
+        console.error("update-file: ", error);
+      }
+
+
+  }
+
+}
+
+export const cleanFileData=()=>{
+
+  return {
+    type:Datatypes.CLEAN_FILE,
   }
 
 }

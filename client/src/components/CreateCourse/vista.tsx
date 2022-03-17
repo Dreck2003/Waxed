@@ -48,7 +48,6 @@ const Vista=({changeVisible,visible,look}:Prop):JSX.Element=>{
 
     const handleChange = (event: React.ChangeEvent<any>)=>{
 
-        console.log(event.target.name)
         setInput({
             ...input,
             [event.target.name]:event.target.value,
@@ -65,7 +64,6 @@ const Vista=({changeVisible,visible,look}:Prop):JSX.Element=>{
 
     const handleSubmit=(event:any)=>{
         event.preventDefault();
-        console.log('se hace la solicitud')
         console.log('fomr: ',event)
 
         if (validateInfo(error, input).length > 0) {
@@ -110,9 +108,6 @@ const Vista=({changeVisible,visible,look}:Prop):JSX.Element=>{
             name: ''
         })
         setImg('');
-        console.log(event);
-        console.log(input)
-        console.log(img)
 
     }
     
@@ -142,7 +137,6 @@ const Vista=({changeVisible,visible,look}:Prop):JSX.Element=>{
 
                             reader.readAsDataURL(input.files![0]);
                             reader.addEventListener('load', (event) => {
-                                console.log(event.target!.result)
                                 setImg(event.target!.result);
                             })
 
