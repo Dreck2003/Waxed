@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import {List} from './links';
 import {  Archive } from '../../../redux/interface';
 import {InputCrud}from './links';
@@ -28,6 +28,12 @@ const ListLink = ({  nameTitle }: List): JSX.Element => {
     const dispatch = useDispatch();
     const archivos=useSelector((state:State)=>state.courseDetail.files);
 
+    useEffect(()=>{
+        if(archivos.length){
+            console.log('primer archivo',archivos[0])
+            dispatch(getFileData(id as string, archivos[0].name))
+        }
+    },[archivos])
 
 
 

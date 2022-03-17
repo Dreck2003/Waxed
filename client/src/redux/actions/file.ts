@@ -7,6 +7,8 @@ type Curso = Course | null;
 
 export const createFile = (name: string, cursoId: string, file: File) => {
 
+
+  console.log('create files: ',file)
   const Read=new FileReader();
   return async (dispatch: Dispatch) => {
     try {
@@ -37,6 +39,7 @@ export const createFile = (name: string, cursoId: string, file: File) => {
           };
 
           //Actualizamos el curso y lo despachamos
+          console.log(event.target.result)
           const creado = await localforage.setItem(cursoId, newCurso);
           console.log("creado file: ", creado);
   
@@ -143,6 +146,7 @@ export const deleteFile=(name:string,courseId:string)=>{
 export const getFileData=(courseId:string,name:string) => {
 
   // const Read=new FileReader();
+  console.log('parametros de obtencion de datos: ',courseId,name)
 
   return async(dispatch:Dispatch)=>{
 
@@ -152,11 +156,14 @@ export const getFileData=(courseId:string,name:string) => {
         const curso: Curso = await localforage.getItem(courseId);
 
         //Filtramos por el nombre del archivo:
+        console.log('el curso es: ',curso)
+        console.log('el archivo es: ');
         const fileToRead = curso!.files.find(
           (file: Archive) => file.name === name
         );
 
         if(fileToRead){
+          console.log('se obtuvo el archivo xd')
 
           dispatch({
             type: Datatypes.GET_FILE,
