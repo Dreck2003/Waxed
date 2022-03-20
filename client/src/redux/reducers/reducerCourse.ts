@@ -9,7 +9,6 @@ const initialCourseDetail:CourseDetail = {
     },
 }
 
-
 export const courseDetailReducer=(state=initialCourseDetail,action:Actions):CourseDetail=>{
 
     switch(action.type){
@@ -37,6 +36,7 @@ export const courseDetailReducer=(state=initialCourseDetail,action:Actions):Cour
 
         case Datatypes.DELETE_FILE:
 
+        
         const oldFileName = action.payload;
         console.log(oldFileName)
 
@@ -85,9 +85,19 @@ export const courseDetailReducer=(state=initialCourseDetail,action:Actions):Cour
 
         case Datatypes.GET_FILE:
 
+            //En el payload de la action me llega el nombre del archivo:
+            console.log('la action es: ',action)
+
+            const file=state.files.find(file=>file.name===action.payload);
+            console.log('el archivo para ver es: ',file)
+
+
             return {
                 ...state,
-                seeFile:action.payload
+                seeFile:{
+                    name:file!.name,
+                    url:file!.url
+                }
             }
 
         case Datatypes.CLEAN_FILE:

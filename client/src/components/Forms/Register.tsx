@@ -1,12 +1,15 @@
-import {useState,useContext, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 import {Header,Input,GroupRow,GroupCol}from './styled';
 import { validator, validateInfo } from '../../helpers/validateForm';
 import { useNavigate } from 'react-router-dom';
+import {useDispatch} from 'react-redux';
+import {createUser} from '../../redux/actions/user';
 
 
 const Register =():JSX.Element=>{
 
     const navigate=useNavigate();
+    const dispatch = useDispatch();
 
     const [inputRegister, setRegister] = useState({
         name: '',
@@ -27,6 +30,19 @@ const Register =():JSX.Element=>{
         
     },[])
 
+    const sendRegister = (event:React.FormEvent) => {
+        event.preventDefault();
+
+        const [resError, resFields] = validateInfo(error, inputRegister)
+        console.log(resError, resFields)
+
+        if (!resError && !resFields) {
+            //Aca vendria el llamado a la api
+            dispatch(createUser(inputRegister));
+        }
+
+    }
+
 
     return(
         <form autoComplete='off' 
@@ -42,17 +58,7 @@ const Register =():JSX.Element=>{
             setError(validator(error, input))
             // console.log(error)
         }}
-        onSubmit={(event) => {
-            event.preventDefault();
-
-            const [resError, resFields] = validateInfo(error, inputRegister)
-            console.log(resError,resFields)
-
-            if (!resError && !resFields) {
-                //Aca vendria el llamado a la api
-            }
-
-        }}
+            onSubmit={sendRegister}
 
 
 

@@ -13,7 +13,6 @@ const Home =():JSX.Element=>{
     const dipatch=useDispatch();
     const estado=useSelector((state:State)=>state.courses);
 
-
     useEffect(()=>{
 
         dipatch(getCourses())
@@ -24,12 +23,13 @@ const Home =():JSX.Element=>{
         <Container>
             {console.log('home renderizado')}
             <Nav/>
+            {console.log('el estado de los cursos es: ',estado)}
             <main>
 
-                {estado ? estado.map((curso,index)=>{
+                {estado.length ? estado.map((curso)=>{
                     // console.log(curso)
                         return(
-                            <Card key={index} img={curso.img!} info={curso.content!} name={curso.name!} actualizado={curso.lastSeen}/>
+                            <Card key={curso.name} img={curso.img!} info={curso.content!} name={curso.name!} />
                         )
                     })
                     :

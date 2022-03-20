@@ -23,31 +23,37 @@ model User {
 }
 
 model Course {
-  id       Int       @id @default(autoincrement())
-  createAt DateTime  @default(now())
-  updateAt DateTime  @updatedAt
-  name     String
+  id       Int       @default(autoincrement())
+  name     String    @id @unique
   content  String?
+  img      String
+
   user     User      @relation(fields: [userId], references: [id])
+  
   userId   Int
   link     Link[]
   archive  Archive[]
+  createAt DateTime  @default(now())
+  updateAt DateTime  @updatedAt
 }
 
 model Archive {
   id       Int      @id @default(autoincrement())
-  name     String
-  course   Course   @relation(fields: [courseId], references: [id])
-  courseId Int
+  name     String   @unique
+  url      String   
+  course   Course   @relation(fields: [courseId], references: [name])
+  courseId String //RElacion con el nombre del curso el id es el nombre
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
 }
 
 model Link {
   id       Int      @id @default(autoincrement())
-  url      String   @unique
-  course   Course   @relation(fields: [courseId], references: [id])
-  courseId Int
+  url      String   
+  name     String   @unique
+
+  course   Course   @relation(fields: [courseId], references: [name])
+  courseId String
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import {List} from './links';
 import {  Archive } from '../../../redux/interface';
 import {InputCrud}from './links';
@@ -28,8 +28,12 @@ const ListLink = ({  nameTitle }: List): JSX.Element => {
     const dispatch = useDispatch();
     const archivos=useSelector((state:State)=>state.courseDetail.files);
 
-
-
+    useEffect(()=>{
+        if(archivos.length){
+            console.log('primer archivo',archivos[0])
+            // dispatch(getFileData(id as string, archivos[0].name))
+        }
+    },[archivos])
 
     let estilos: Estilos;
     estilos = visible ? estilos = { visible: 'block', height: '200px', animation: 'open 0.5s linear' } : estilos = { visible: 'block', height: '0px', animation: 'cerrar 0.5s linear', }
@@ -43,20 +47,28 @@ const ListLink = ({  nameTitle }: List): JSX.Element => {
     }
 
 
-    const createFileEvent = (event: React.ChangeEvent<HTMLFormElement>) => {
+    const createFileEvent = async(event: React.ChangeEvent<HTMLFormElement>) => {
 
         event.preventDefault();
-        const name = event.target.nameLink.value;
-        const file = event.target.file.files[0];
-        dispatch(createFile(name,id as string,file));
+        // const name = event.target.nameLink.value;
+        // const file = event.target.file.files[0];
+        // dispatch(createFile(name,id as string,file));
         setAdd(!add);
         // event.target.nameLink.value = '';
         // event.target.urlLink.value = '';
+
+        console.log(event)
+        const sendData=new FormData(event.target);
+
+        dispatch(createFile(sendData));
+        
     }
+
 
     const ReadFile=(event:any) => {
 
-        dispatch(getFileData(id as string, event.target.id))
+        console.log(event.target.id)
+        dispatch(getFileData(event.target.id))
 
     }
 
@@ -108,8 +120,9 @@ const ListLink = ({  nameTitle }: List): JSX.Element => {
                         })
                     }
                     <form className='newLink' style={heigth}  autoComplete='off' onSubmit={createFileEvent}>
-                        <InputCrud type='text' name='nameLink' placeholder='name' />
-                        <InputCrud type='file' name='file' placeholder='file' required accept='.pdf' />
+                        <InputCrud type='text' name='nameFile' placeholder='name' />
+                        <input type='hidden' value={id} name='courseId' style={{display:'none'}}/>
+                        <InputCrud type='file' name='miFile' placeholder='file' required accept='.pdf' />
                         <button>Create</button>
                     </form>
 

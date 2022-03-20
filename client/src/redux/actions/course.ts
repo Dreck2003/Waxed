@@ -1,32 +1,36 @@
 import { Dispatch } from "redux";
 import { Course, Datatypes } from "../interface";
 import LocalForage from "localforage";
+import axios from 'axios';
+
+const URL = "http://localhost:3001/api/courses";
 
 
-export const createCourse = (name: string, curso: Course) => {
+export const createCourse = (name: string, curso: any) => {
 
   return async (dispatch: Dispatch) => {
 
-    const read = new FileReader();
+    try{
 
-    read.readAsDataURL(curso.img);
+      const {data}= await axios({
+        method:'POST',
+        url:URL,
+        data:curso,
+        headers:{ "Content-Type": "multipart/form-data" }
 
-    read.addEventListener('load', async(event: any) => {
+      })
+      if (data.error)
+        return console.error("existe error createCourse: ", data.error);
+
+      dispatch({
+        type: Datatypes.CREATE_COURSE,
+        payload: data.content,
+      });
 
 
-        const fileCurso={
-            ...curso,
-            img:event.target.result,
-        };
-        const course = await LocalForage.setItem(name, fileCurso);
-
-        dispatch({
-          type: Datatypes.CREATE_COURSE,
-          payload: fileCurso,
-        });
-        alert('Create Course Succefull')
-
-    })
+    }catch(error){
+      console.error('createCourseAction: ',error)
+    }
     
 
     
@@ -38,21 +42,41 @@ export const getCourses = () => {
   
     return async (dispatch: Dispatch) => {
 
-    try {
-      const courses: Course[] = [];
+      try{
 
-      await LocalForage.iterate((valor, key) => {
-        courses.push(valor as Course);
-      });
+        const {data}=await axios(URL);
 
-      dispatch({
-        type: Datatypes.GET_COURSES,
-        payload: courses,
-      });
+        dispatch({
+          type:Datatypes.GET_COURSES,
+          payload:data.content,
+        })
 
-    } catch (err) {
+      }catch(error){
+        console.error('getCourses: ',error)
+      }
 
-      console.error("38- ", err);
-    }
+
+
+
+      
+
+
+
+    // try {
+    //   const courses: Course[] = [];
+
+    //   await LocalForage.iterate((valor, key) => {
+    //     courses.push(valor as Course);
+    //   });
+
+    //   dispatch({
+    //     type: Datatypes.GET_COURSES,
+    //     payload: courses,
+    //   });
+
+    // } catch (err) {
+
+    //   console.error("38- ", err);
+    // }
   };
 };

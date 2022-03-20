@@ -26,10 +26,10 @@ export const createUser= async(req: Request, res: Response, next: NextFunction)=
                 userName:userName,
                 }
             })
-            return res.send(user)
+            return res.send({error:null,content:user})
 
         }else{
-            return res.send({error:'User already exists'})
+            return res.send({error:'User already exists',content:null})
         }
 
     }catch(err){
@@ -56,6 +56,7 @@ export const getUser= async(req: Request, res: Response, next: NextFunction)=>{
                 userName:true,
                 name:true,
                 lastName:true,
+                email:true
             }
         })
 
@@ -66,7 +67,7 @@ export const getUser= async(req: Request, res: Response, next: NextFunction)=>{
             
         }
         if(user.userName===userName){
-            return res.send(user);
+            return res.send({error:null,content:user});
         }
         return res.send('algo paso')
 

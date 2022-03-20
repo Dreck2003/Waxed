@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getCourses, createCourse, subirFile } from "../controllers/courses";
+import { getCourses, createCourse, subirCourse, getCourseDetail } from "../controllers/courses";
 import {Request, Response,NextFunction} from 'express';
 import { validateCreateCourse } from "../validators/courses";
 
@@ -11,8 +11,9 @@ const other=(req: Request, res: Response, next: NextFunction)=>{
 }
 
 router.get('/',getCourses);
+router.get('/:id',getCourseDetail)
 
-router.post("/", validateCreateCourse, createCourse);
+router.post("/",subirCourse, createCourse);
 
 
 

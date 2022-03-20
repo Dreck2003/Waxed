@@ -22,7 +22,7 @@ const Course=():JSX.Element=>{
 
     const {id}=useParams();
     const dispatch=useDispatch();
-    const archivo=useSelector((state:State)=>state.courseDetail.seeFile)
+    const archivo=useSelector((state:State)=>state.courseDetail.seeFile);
 
 
     useEffect(() =>{

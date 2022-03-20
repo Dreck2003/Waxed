@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 //===================================
@@ -6,13 +6,23 @@ import styled from 'styled-components';
 import Register from './Register';
 import {Formulario,ChangeForm} from './styled';
 import Login from './Login';
+import {useSelector} from 'react-redux';
+import { State } from '../../redux/reducers';
+import { useNavigate } from 'react-router-dom';
+
 
 
  const Forms=():JSX.Element=>{
+    const [form,changeForm]=useState<Boolean>(true);
+    const usuario=useSelector((state:State)=>state.user);
+     const navigate = useNavigate()
 
-    
-    
-    const [form,changeForm]=useState<Boolean>(true)
+    useEffect(()=>{
+
+        if(usuario) navigate('/home')
+        console.log('Forms',usuario)
+
+    },[usuario])
 
 
     return(
