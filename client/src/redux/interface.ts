@@ -19,9 +19,8 @@ export interface Course {
   content: string | null;
   img?: string | null | any;
   // id:number,
-  files: Archive[]| any;
-  links: Link[] | [];
-  lastSeen: Date;
+  files: Archive[]| null;
+  links: Link[] | [] | null;
 }
 
 
@@ -33,7 +32,7 @@ export interface Link {
 export interface Archive {
   name: string;
   cursoId: string;
-  file: File;
+  url:string
 }
 
 export interface User {
@@ -113,10 +112,7 @@ export interface DELETE_FILE{
 }
 export interface GET_FILE{
   type:Datatypes.GET_FILE,
-  payload:{
-    name:string,
-    url:string
-  }
+  payload:string
 }
 
 export interface CLEAN_FILE {

@@ -6,8 +6,7 @@ export const validateCreateCourse = (
   res: Response,
   next: NextFunction
 ) => {
-    console.log(req.body)
-
+    console.log('validacion del curso: ',req.body)
     const {name,content}=req.body;
 
     if(!name){
@@ -22,6 +21,5 @@ export const validateCreateCourse = (
           });
     }
     next();
-
 };
 

@@ -6,11 +6,10 @@ import { User, Course, CourseDetail } from "../interface";
 import { courseDetailReducer } from "./reducerCourse";
 
 interface GlobalState {
-  user: User;
+  user: User | null;
   courses: Course[];
   courseDetail: CourseDetail;
 }
-
 
 export const rootReducer = combineReducers<GlobalState>({
   user: userReducer,

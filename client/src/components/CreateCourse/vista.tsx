@@ -1,8 +1,10 @@
 import {useState} from 'react';
 import { Aside, Content, Input, TextArea, SubFile, Buttons } from './stCreate';
 import { validateInfo, validator} from '../../helpers/validateForm';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import { createCourse } from '../../redux/actions/course';
+import { State } from '../../redux/reducers/index';
+
 
 
 interface Prop{
@@ -19,10 +21,7 @@ export interface Curso {
     name: string;
     content: string | null;
     img?: any;
-    // id:number,
-    files: string[] | [];
-    links: string[] | [];
-    lastSeen: Date;
+
 }
 
 
@@ -33,6 +32,7 @@ const URL: string ='http://localhost:3001/api/courses'
 const Vista=({changeVisible,visible,look}:Prop):JSX.Element=>{
 
     const dispatch=useDispatch();
+    const user=useSelector((state:State)=>state.user)
     
     const [img,setImg]=useState<any>(null);
     const [input,setInput]=useState<Course>({
@@ -66,6 +66,8 @@ const Vista=({changeVisible,visible,look}:Prop):JSX.Element=>{
         event.preventDefault();
         console.log('fomr: ',event)
 
+        if(!(user!.name)) return console.error('handleSUbmit:vista');
+
         if (validateInfo(error, input).length > 0) {
            return alert('existen erroes o faltan campos a completar')
         }
@@ -74,16 +76,9 @@ const Vista=({changeVisible,visible,look}:Prop):JSX.Element=>{
             alert('The course description should not be longer than 160 letters')
         }
 
-        let curso:Curso={
-            name: input.name,
-            content: event.target.content.value,
-            img:event.target.image.files[0],
-            files: [],
-            links: [],
-            lastSeen: new Date(),
-        }
+        const course=new FormData(event.target);
 
-        dispatch(createCourse(input.name,curso));
+        dispatch(createCourse(user!.name,course));
 
         //Reseteo de las inputs jajaja
 
@@ -126,9 +121,9 @@ const Vista=({changeVisible,visible,look}:Prop):JSX.Element=>{
                     <header>Create the Course</header>
                     <Input type='text' placeholder='Course name...' name='name'/>
                     <TextArea placeholder='Description of course...' name='content'/>
+                    <input type='hidden' value={user!.email} name='email'/> 
                     <SubFile >
                         <span>Add Image</span>
-                        {/* <img src={SVG} alt='file'/> */}
                         <i>+</i>
                         <Input type='file' onChange={(event) => {
                             

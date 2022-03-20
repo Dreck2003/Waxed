@@ -6,13 +6,21 @@ interface Prop{
     img:string,
     info:string,
     name:string,
-    actualizado:Date
+    // actualizado:Date
+}
+const Corte ='http://localhost:3001/'
+
+const srcToUrl=(src:string) => {
+    const data=src.split(`${"\\"}`).slice(1).join('/')
+    return Corte+data
+
 }
 
-const Card=({img,info,name,actualizado}:Prop):JSX.Element=>{
+
+const Card=({img,info,name}:Prop):JSX.Element=>{
     const navigate=useNavigate();
 
-    const urlImg = img ? img : 'assets/images/default.jpg' 
+    let urlImg = img ? srcToUrl(img) : 'assets/images/default.jpg' 
 
     return (
         <Course onClick={()=>{navigate(`/courses/${name}`)}}>
@@ -27,7 +35,7 @@ const Card=({img,info,name,actualizado}:Prop):JSX.Element=>{
                 </div>
             </Informer> 
             <Visto>
-                {actualizado.toString()}
+                fala actualizar
             </Visto>
         </Course>
     )

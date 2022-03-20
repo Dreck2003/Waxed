@@ -1,31 +1,32 @@
 import { Dispatch } from "redux";
 import { User } from "../../interfaces/interfaces";
 import { Actions, Datatypes } from "../interface";
+import axios from 'axios';
+
+const URL_USER = "http://localhost:3001/api/users/";
 
 
 export const createUser=(usuario:User)=>{
 
-    return (dispatch:Dispatch)=>{
+    return async(dispatch:Dispatch)=>{
 
-            fetch("http://localhost:3001/api/user/create",{
-                method: "POST",
-                headers:{
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(usuario)
-            })
-            .then(res=>res.json())
-            .then(userCreate=>{
-                
-                dispatch<Actions>({
-                    type:Datatypes.CREATE_USER,
-                    payload:userCreate
-                });
 
-            })
-            .catch(err =>{
-                console.log('29- ',err)
-            })
+        try{
+
+            const {data}=await axios.post(URL_USER+'create',usuario);
+
+            if(data.error) return console.log('error: ',data.error);
+
+            dispatch<Actions>({
+              type: Datatypes.CREATE_USER,
+              payload: data.content,
+            });
+
+
+
+        }catch(error){
+            console.log('createUser Action: ',error)
+        }
 
    
     }
@@ -40,24 +41,27 @@ interface DataUser{
 
 export const getUser=(userData:DataUser) =>{
 
-    return (dispatch: Dispatch)=>{
+    return async(dispatch: Dispatch)=>{
+            
 
-        fetch("http://localhost:3001/api/user/",{
-            method: "POST",
-            headers:{
-                "Content-Type": "application/json"
-            },
-            body:JSON.stringify(userData)
+        try{
 
-        })
-        .then(res=>res.json())
-        .then(user=>{
+            const {data}=await axios.post(URL_USER,userData);
+
+            if(data.error) return console.log('getUSer Action-Data: ',data.error)
 
             dispatch({
-                type:Datatypes.GET_USER,
-                payload:user
-            })
-        })
+                type: Datatypes.GET_USER,
+                payload: data.content,
+            });
+
+
+        }catch(error){
+            console.log('getUser Action: ',error);
+        }
+
+
+
 
     }
 
