@@ -128,7 +128,7 @@ const Links = ({ color, name, url, deleteUrl}: PropLink): JSX.Element => {
     //faltaria poder editar el nombre del url
 
     return (
-        <div key={name.toString()} style={{ backgroundColor: color, width: '100%', textAlign: 'center' }} className='container_links'>
+        <div key={name} style={{ backgroundColor: color, width: '100%', textAlign: 'center' }} className='container_links'>
             <a href={url} target='_blank'>
                 {name}
             </a>

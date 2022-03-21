@@ -89,7 +89,7 @@ export interface UPDATE_LINK{
 
 export interface DELETE_LINK {
   type: Datatypes.DELETE_LINK;
-  payload: Link[];
+  payload: Link;
 }
 
 

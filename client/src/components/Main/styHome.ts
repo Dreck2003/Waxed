@@ -8,8 +8,6 @@ export const Container=styled.div`
 
     main{
         height:auto;
-        /* border:2px solid orange; */
-        margin-top:10px;
         display: flex;
         align-items:center;
         flex-wrap: wrap;
