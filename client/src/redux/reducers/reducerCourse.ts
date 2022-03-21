@@ -37,22 +37,22 @@ export const courseDetailReducer=(state=initialCourseDetail,action:Actions):Cour
         case Datatypes.DELETE_FILE:
 
         
-        const oldFileName = action.payload;
-        console.log(oldFileName)
+            const oldFileName = action.payload;
+            console.log(oldFileName)
 
-        const files = state.files.filter((file) => file.name !== oldFileName.name);
+            const files = state.files.filter((file) => file.name !== oldFileName.name);
 
-        if(state.seeFile.name === oldFileName.name){
-            return {
-              ...state,
-              files: files,
-              seeFile:{
-                  name:'',
-                  url:''
+            if(state.seeFile.name === oldFileName.name){
+                return {
+                ...state,
+                files: files,
+                seeFile:{
+                    name:'',
+                    url:''
 
-              }
-            };
-        }
+                }
+                };
+            }
 
             return {
                 ...state,
@@ -77,10 +77,13 @@ export const courseDetailReducer=(state=initialCourseDetail,action:Actions):Cour
         case Datatypes.DELETE_LINK:
             
 
+            const oldLink=action.payload;
+
+            const links=state.links.filter((link) => oldLink.name !== link.name)
 
             return {
                 ...state,
-                links:action.payload
+                links:links
             }
 
         case Datatypes.GET_FILE:

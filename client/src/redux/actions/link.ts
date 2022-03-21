@@ -1,37 +1,30 @@
+import axios from "axios";
 import localforage from "localforage"
 import { Dispatch } from "redux"
 import {Datatypes, Link,Course} from '../interface';
 
 
-type Curso=Course | null
+type Curso=Course | null;
+
+const URL_LINK = "http://localhost:3001/api/links";
+
 
 export const createLink=(name:string,courseId:string,url:string)=>{
+    console.log('los parametros de la creacion del link son : ',name ,courseId,url)
 
     return async(dispatch: Dispatch)=>{
 
         try{
 
-            const curso:Curso= await localforage.getItem(courseId);
+            const {data}= await axios.post(URL_LINK,{nameLink:name,courseId:courseId,url:url});
+            console.log('la respuesta es: ',data)
 
-            const links=curso!.links.map((link:Link)=>link.name );
+            if(data.error) return console.log('error CreateLink: ',data.error);
             
-            if(links.includes(name)){
-                alert('El link ya existia');
-            }else{
-
-                const newCurso={
-                    ...curso,
-                    links:[...curso!.links, {name,url,courseId}]
-                }
-
-                const creado=await localforage.setItem(courseId,newCurso);
-
-                //Despachamos el nuevo link creado
-                dispatch({
-                    type:Datatypes.CREATE_LINK,
-                    payload:{name,url,courseId}
-                })
-            }
+            dispatch({
+                type:Datatypes.CREATE_LINK,
+                payload:data.content
+            })
 
         }catch(error){
             console.error('createLink- ',error)
@@ -40,76 +33,69 @@ export const createLink=(name:string,courseId:string,url:string)=>{
     }
 }
 
-export const updateLink=(name:string,courseId:string)=>{
+// export const updateLink=(name:string,courseId:string)=>{
 
-    return async(dispatch: Dispatch)=>{
+//     return async(dispatch: Dispatch)=>{
 
-        try{
+//         try{
 
-            const curso:Curso= await localforage.getItem(courseId);
-            const link=curso!.links.find((link:Link) => link.name===name);
-            const links=curso!.links.filter((link:Link) => link.name !== name)
+//             const curso:Curso= await localforage.getItem(courseId);
+//             const link=curso!.links.find((link:Link) => link.name===name);
+//             const links=curso!.links.filter((link:Link) => link.name !== name)
 
-            if(link){
+//             if(link){
 
-                const newLink:Link={
-                    ...link,
-                    name:name
-                }
+//                 const newLink:Link={
+//                     ...link,
+//                     name:name
+//                 }
 
-                links.push(newLink);
+//                 links.push(newLink);
 
-                await localforage.setItem(courseId,{
-                    ...curso,
-                    links:links
-                })
+//                 await localforage.setItem(courseId,{
+//                     ...curso,
+//                     links:links
+//                 })
 
-                dispatch({
-                    type:Datatypes.UPDATE_LINK,
-                    payload:links
-                })
-
-
-            }else{
-                alert('no se encontro el link');
-                console.error(link)
-            }
+//                 dispatch({
+//                     type:Datatypes.UPDATE_LINK,
+//                     payload:links
+//                 })
 
 
-
-
-        }catch(error){
-            console.error('updateLink: ',error)
-        }
-
-    }
-
-}
+//             }else{
+//                 alert('no se encontro el link');
+//                 console.error(link)
+//             }
 
 
 
-export const deleteLink = (name: string, courseId: string) => {
+
+//         }catch(error){
+//             console.error('updateLink: ',error)
+//         }
+
+//     }
+
+// }
+
+
+
+export const deleteLink = (name: string) => {
     // console.log('los links se van a borrar wajajwaja');
   return async (dispatch: Dispatch) => {
     try {
-      const curso: Curso = await localforage.getItem(courseId);
+      
+        const {data}=await axios.delete(URL_LINK,{data:{nameLink:name}})
 
-
-      const links = curso!.links.filter((link: Link) => link.name !== name);
-
-      await localforage.setItem(courseId, {
-          ...curso,
-          links:links
-      });
-    // console.log("los links se guardaron el local storage");
-
+        if(data.error) return console.log('error DeleteLink: ',data.error);
 
       dispatch({
         type: Datatypes.DELETE_LINK,
-        payload: links,
+        payload: data.content,
       });
 
-        // console.log("los links se despacharon");
+        console.log("los links se despacharon");
 
 
     } catch (error) {

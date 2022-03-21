@@ -98,6 +98,7 @@ export const createCourse= async (req: any, res: Response, next: NextFunction)=>
 
 export const getCourseDetail=async(req: Request, res: Response, next: NextFunction)=>{
 
+  console.log('envio de datos de deatalles del curso jajaja')
   const {id}=req.params;//El id deberia ser un string --> nombre del curso XD
 
   if(typeof id !=='string') return res.send(400).json({error:'the id not is string', content:null});

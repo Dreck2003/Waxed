@@ -20,7 +20,7 @@ const srcToUrl=(src:string) => {
 const Card=({img,info,name}:Prop):JSX.Element=>{
     const navigate=useNavigate();
 
-    let urlImg = img ? srcToUrl(img) : 'assets/images/default.jpg' 
+    let urlImg = img ? img: 'assets/images/default.jpg' 
 
     return (
         <Course onClick={()=>{navigate(`/courses/${name}`)}}>
