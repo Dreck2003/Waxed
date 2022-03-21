@@ -1,6 +1,5 @@
 import {Navegator} from './styleNav';
 import {StyleLink} from '../../styles/styLink';
-import { useState } from 'react';
 import Create from '../CreateCourse/Create';
 
 const Nav=():JSX.Element=>{
@@ -11,11 +10,11 @@ const Nav=():JSX.Element=>{
             <span>
                 WAXED
             </span>
-            <StyleLink to='/home'>
+            <StyleLink to='/home' className='buttonLink'>
                 Home
             </StyleLink>
-            <StyleLink to='/about'>
-                ABOUT
+            <StyleLink to='/about' className='buttonLink'>
+                About
             </StyleLink>
             <Create/>
         </Navegator>

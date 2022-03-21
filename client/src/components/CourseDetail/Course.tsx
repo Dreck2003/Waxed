@@ -7,6 +7,7 @@ import {useEffect} from 'react';
 import { getCourseDetail } from '../../redux/actions/courseDetail';
 import { State } from '../../redux/reducers';
 import { cleanFileData } from '../../redux/actions/file';
+import Sidebar from './sidebar/Sidebar';
 
 interface Course {
     name: string;
@@ -38,9 +39,10 @@ const Course=():JSX.Element=>{
 
     return(
         <Container>
-            <Nav/>
+            {/* <Nav/> */}
             <Content>
-                <Links />
+                {/* <Links /> */}
+                <Sidebar/>
                 {console.log('seeFile', archivo)}
                 <section className="item-grid">
                     <object
