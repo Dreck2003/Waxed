@@ -12,10 +12,12 @@ const Create=():JSX.Element=>{
 
 
     return (
-        <Container>
-            <span onClick={()=>setVisible(!visible)}  style={{fontWeight:'bold',cursor:'pointer'}}>
-                Create Course
-            </span>
+        <Container >
+            <div className='buttonLink' onClick={() => setVisible(!visible)}>
+                <span >
+                    Create Course
+                </span>
+            </div>
             <Vista changeVisible={setVisible} visible={visible} look={visible}/>
         </Container>
     )

@@ -12,6 +12,7 @@ export enum Datatypes {
   UPDATE_LINK,
   DELETE_LINK,
   FIND_COURSE,
+  CHANGE_VIEW,
 }
 
 export interface Course {
@@ -50,6 +51,7 @@ export interface CourseDetail{
     name:string,
     url:string
   }
+  viewSidebar: string
 }
 
 export interface CREATE_USER{
@@ -122,6 +124,16 @@ export interface CLEAN_FILE {
 //================================
 
 
+export interface CHANGE_VIEW{
+  type: Datatypes.CHANGE_VIEW,
+  payload:string
+}
+
+
+
+
+//===============================
+
 
 
 export  type Actions =
@@ -137,4 +149,5 @@ export  type Actions =
   | CREATE_LINK
   | DELETE_LINK
   | UPDATE_LINK
-  | FIND_COURSE;
+  | FIND_COURSE
+  | CHANGE_VIEW;

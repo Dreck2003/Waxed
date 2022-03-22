@@ -1,11 +1,9 @@
-import logo from './logo.svg'
 import './App.css'
 import {BrowserRouter,Routes,Route} from 'react-router-dom';
 
 //============================================================================
 import Login from './components/Forms/Forms';
 import Home from './components/Main/Home';
-import Nav from './components/Nav/Nav';
 import Course from './components/CourseDetail/Course';
 // import Create from './components/CreateCourse/Create';
 

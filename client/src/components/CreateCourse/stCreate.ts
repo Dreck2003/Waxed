@@ -37,59 +37,58 @@ export const Aside=styled.div`
 
 
 export const Container=styled.div`
+    overflow: hidden;
     span{
         font-weight: bold;
         cursor:pointer;
-        &:hover{
+        /* &:hover{
             color:#c4d2e2;
-        }
+        } */
     }
 `
 
-export const Content=styled.form`
-    width:96%;
-    margin:50px 2%;
-    height:500px;
+export const Content = styled.form`
+  width: 96%;
+  margin: 50px 2%;
+  height: 500px;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  justify-content: space-evenly;
+
+  span {
+    text-align: center;
+    color: white;
+  }
+  header {
+    width: 100%;
+    height: 20px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+  }
+  .btn-crear {
+    color: #fff;
+    font-weight: bold;
+    background: #83aad7;
+    border: none;
+    cursor: pointer;
+    margin: 5px 20px;
+    border: 1px solid #ccd2da;
+    padding: 6px;
+  }
+  div {
+    width: 100%;
+    height: 100px;
     display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-
-
-    span{
-        text-align: center;
-        color: white;
+    justify-content: center;
+    align-items: center;
+    img {
+      width: 80%;
+      height: 100%;
     }
-    header{
-        width:100%;
-        height:20px;
-        color:white;
-        font-weight: bold;
-        text-align:center;
-    }
-    .btn-crear{
-        color: #fff;
-        font-weight: bold;
-        background: #83aad7;
-        border: none;
-        cursor:pointer;
-        margin:5px 20px;
-        border: 1px solid #ccd2da;
-        padding:6px;
-
-    }
-    div{
-        width:100%;
-        height:100px;
-        display:flex;
-        justify-content: center;
-        align-items: center;
-        img{
-            width:80%;
-            height: 100%;
-        }
-    }
-
-`
+  }
+`;
 
 export const Input=styled.input`
     border:none;

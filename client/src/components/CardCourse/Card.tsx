@@ -20,7 +20,8 @@ const srcToUrl=(src:string) => {
 const Card=({img,info,name}:Prop):JSX.Element=>{
     const navigate=useNavigate();
 
-    let urlImg = img ? img: 'assets/images/default.jpg' 
+    let urlImg = img ? img: 'assets/images/default.jpg' ;
+    let nameFinal=name[0].toUpperCase()+name.slice(1).toLowerCase();
 
     return (
         <Course onClick={()=>{navigate(`/courses/${name}`)}}>
@@ -29,7 +30,7 @@ const Card=({img,info,name}:Prop):JSX.Element=>{
                {/* <div className="encima">IMAGE NOT FOUND</div>  */}
             </div>
             <Informer>
-                <h3>{name}</h3>
+                <h3>{nameFinal}</h3>
                 <div className="description">
                     {info} 
                 </div>
