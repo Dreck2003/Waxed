@@ -10,45 +10,30 @@ export const SectionBar=styled.section`
     bottom:0;
 
 `
-export const ListItems=styled.ul`
+export const ListItems = styled.ul`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  /* position: relative; */
 
-    width: 100%;
-    height: 100%;
+  li {
+    border: 1px solid red;
     display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    /* position: relative; */
-
-    li{
-        border:1px solid red;
-        display: flex;
-        /* justify-content:center; */
-        /* align-items: center; */
-        padding:10px 0px;
-        img{
-            padding-right: 5px;
-        }
-        span{
-            font-weight:bold;
-
-        }
-
-        &:hover{
-            cursor:pointer;
-        }
+    /* justify-content:center; */
+    /* align-items: center; */
+    padding: 10px 0px;
+    img {
+      padding-right: 5px;
     }
-`
+    span {
+      font-weight: bold;
+    }
 
-export const Submenu=styled.section`
-    /* display: none; */
-    position: absolute;
-    top: 0;
-    left: 100px;
-    height:99vh;
-    width: 300px;
-    border: 1px solid blue;
-    display:flex;
-    justify-content: center;
-    align-items: center;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+`;
 
-`

@@ -7,6 +7,7 @@ const initialCourseDetail:CourseDetail = {
         name:'',
         url:''
     },
+    viewSidebar:''
 }
 
 export const courseDetailReducer=(state=initialCourseDetail,action:Actions):CourseDetail=>{
@@ -111,6 +112,13 @@ export const courseDetailReducer=(state=initialCourseDetail,action:Actions):Cour
                     name:'',
                     url:''
                 }
+            }
+
+        case Datatypes.CHANGE_VIEW:
+
+            return {
+                ...state,
+                viewSidebar:action.payload,
             }
 
         default:

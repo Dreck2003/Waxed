@@ -10,22 +10,6 @@ const URL_COURSE = "http://localhost:3001/api/courses/";
 
 export const getCourseDetail = (id: string) => {
   return async (dispatch: Dispatch) => {
-    // const courseDetail={
-    //     links:{}
-    // };
-
-    // const curso: Curso = await localforage.getItem(id);
-    // // courseDetail.links = curso!.links;
-    // console.log("action 22- ", curso);
-
-    // dispatch({
-    //   type: Datatypes.FIND_COURSE,
-    //   payload: {
-    //     files: curso!.files,
-    //     links: curso!.links,
-    //   },
-    // });
-
 
     try{
 
@@ -62,3 +46,11 @@ export const getCourseDetail = (id: string) => {
   };
 };
 
+
+
+export const viewSidebar = (tipo: string) => {
+  return {
+    type: Datatypes.CHANGE_VIEW,
+    payload:tipo
+  };
+};

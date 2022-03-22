@@ -11,6 +11,7 @@ export const List = styled.div`
     /* height: auto; */
     /* max-height: 200px; */
     width: 100%;
+    height: 100%;
 
     @keyframes open {
       0% {

@@ -1,77 +1,51 @@
-import { SectionBar, ListItems,Submenu } from "./StySidebar";
+import { SectionBar, ListItems } from "./StySidebar";
 import {useNavigate} from 'react-router-dom'
 import { useState } from "react";
+import LinkList from "../Links/LinkList";
+import FileList from "../Links/FileList";
+import { useDispatch } from "react-redux";
+import {viewSidebar} from '../../../redux/actions/courseDetail';
 
 interface Visibles{
     [key: string]:boolean,
 }
 
+interface Prop{
+    valor:boolean,
+    changeValor:any
+}
 
-const Sidebar = (): JSX.Element => {
+
+const Sidebar = ({valor,changeValor}:Prop): JSX.Element => {
     const navigate=useNavigate();
-    const [submenu,setSubmenu] = useState<Visibles>({
-        links:false,
-        files:false,
-        calculator:false
+    
+    const dispatch=useDispatch();
 
-    });
-
-    const changeMenu=(prop:string) => {
-
-        const newMenu:Visibles ={
-            links: false,
-            files: false,
-            calculator:false
-        };
-        const arreglo=Object.keys(submenu);
-        
-        arreglo.forEach((key:string) => {
-
-            if(key === prop){
-
-                if(submenu[key]===true){
-
-                    newMenu[prop]=false;
-
-                }else{
-                    newMenu[prop] = true;
-                }
-            }
-        })
-        console.log(prop,newMenu);
-        setSubmenu(newMenu);
-    }
     
 
     return (
         <SectionBar className="item-grid">
             <ListItems>
-                <li onClick={() => changeMenu('links')}>
+                <li onClick={() => dispatch(viewSidebar('links'))}>
                     <div>
                         <img src='../../../../assets/icons/link.svg' alt='links' />
                     </div>
                     <span>Links</span>
-                    {submenu.links && <Submenu>
-                        links
-                    </Submenu>}
+
                 </li>
-                <li onClick={() => changeMenu('files')}>
+                <li onClick={() => dispatch(viewSidebar('files'))}>
                     <div>
                         <img src='../../../../assets/icons/file.svg' alt='files' />
                     </div>
                     <span>Files</span>
-                    {submenu.files && <Submenu>
-                        files
-                    </Submenu>}
+
                 </li>
-                <li onClick={() => changeMenu('calculator')}>
+                <li onClick={() => dispatch(viewSidebar('calculator'))}>
                     <div>
                         <img src='../../../../assets/icons/calculadora.svg' alt='calculator' />
                     </div>
                     <span>Calculator</span>
-                    {submenu.calculator && <Submenu>
-                        calculadora
-                    </Submenu>}
+
                 </li>
                 <li onClick={()=>navigate('/home')}>
                     <span>
