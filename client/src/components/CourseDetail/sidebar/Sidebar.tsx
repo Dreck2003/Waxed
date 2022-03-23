@@ -1,31 +1,35 @@
-import { SectionBar, ListItems } from "./StySidebar";
-import {useNavigate} from 'react-router-dom'
-import { useState } from "react";
-import LinkList from "../Links/LinkList";
-import FileList from "../Links/FileList";
-import { useDispatch } from "react-redux";
+import { SectionBar, ListItems,Avatar } from "./StySidebar";
+import {useNavigate,useParams} from 'react-router-dom'
+import { useDispatch,useSelector } from "react-redux";
 import {viewSidebar} from '../../../redux/actions/courseDetail';
-
-interface Visibles{
-    [key: string]:boolean,
-}
-
-interface Prop{
-    valor:boolean,
-    changeValor:any
-}
+import { State } from "../../../redux/reducers";
 
 
-const Sidebar = ({valor,changeValor}:Prop): JSX.Element => {
+
+const Sidebar = (): JSX.Element => {
     const navigate=useNavigate();
-    
     const dispatch=useDispatch();
+    const {id}=useParams();
+    const cursos=useSelector((state:State)=>state.courses);
 
-    
+    const urlImage=cursos.find((course:any)=>course.name===id);
 
     return (
         <SectionBar className="item-grid">
+            <Avatar>
+                <div><img src={urlImage!.img} /></div>
+                <span>{urlImage!.name}</span>
+            </Avatar>
+
             <ListItems>
+                <li onClick={() => navigate('/home')}>
+                    <div>
+                        <img src='../../../../assets/icons/home.svg' alt='Home' />
+                    </div>
+                    <span>
+                        Home
+                    </span>
+                </li>
                 <li onClick={() => dispatch(viewSidebar('links'))}>
                     <div>
                         <img src='../../../../assets/icons/link.svg' alt='links' />
@@ -40,18 +44,20 @@ const Sidebar = ({valor,changeValor}:Prop): JSX.Element => {
                     <span>Files</span>
 
                 </li>
+                <li onClick={() => dispatch(viewSidebar('summary'))}>
+                    <div>
+                        <img src='../../../../assets/icons/note.svg' alt='files' />
+                    </div>
+                    <span>Summary</span>
+
+                </li>
                 <li onClick={() => dispatch(viewSidebar('calculator'))}>
                     <div>
                         <img src='../../../../assets/icons/calculadora.svg' alt='calculator' />
                     </div>
                     <span>Calculator</span>
-
                 </li>
-                <li onClick={()=>navigate('/home')}>
-                    <span>
-                        Home
-                    </span>
-                </li>
+                
 
             </ListItems>
         </SectionBar>
@@ -60,13 +66,6 @@ const Sidebar = ({valor,changeValor}:Prop): JSX.Element => {
 }
 
 
-// const ListLinks=():JSX.Element=>{
-
-
-//     return(
-//         <
-//     )
-// }
 
 
 

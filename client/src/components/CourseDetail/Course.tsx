@@ -9,6 +9,8 @@ import { cleanFileData } from '../../redux/actions/file';
 import Sidebar from './sidebar/Sidebar';
 import LinkList from './Links/LinkList';
 import FileList from './Links/FileList';
+import Notes from './Notes/Notes';
+import Calculadora from './Calculadora/Calculadora';
 
 interface Course {
     name: string;
@@ -26,7 +28,6 @@ const Course=():JSX.Element=>{
     const dispatch=useDispatch();
     const archivo=useSelector((state:State)=>state.courseDetail.seeFile);
     const viewSidebar=useSelector((state:State)=>state.courseDetail.viewSidebar);
-    const [desplazar,setDesplazar]=useState<boolean>(false);
 
     useEffect(() =>{
 
@@ -39,13 +40,12 @@ const Course=():JSX.Element=>{
 
     },[])
 
-    const objectStyle = !desplazar ? { width: '100%', height: '100%' } : { width: 'calc(100% - 300px)', height: '100%',marginLeft:'300px' }
 
     return(
         <Container>
             {/* <Nav/> */}
             <Content>
-                <Sidebar valor={desplazar} changeValor={setDesplazar}/>
+                <Sidebar />
                 {console.log('seeFile', archivo)}
                 <ViewFields className="item-grid viewSidebar">
                     {changeSideBar(viewSidebar)}
@@ -76,17 +76,15 @@ const changeSideBar=(type:string)=>{
             return <FileList/>
 
         case 'calculator':
-            return <h1>HellowDa</h1>
+            return <Calculadora/>;
+        
+        case 'summary':
+            return <Notes/>
 
         default:
             return <h1>TODO APP</h1>
 
-
-
     }
-
-
-
 }
 
 

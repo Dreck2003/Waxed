@@ -70,10 +70,10 @@ const FileList = (): JSX.Element => {
             <ListLink>
                 <div className='listFormLinks'>
                     <Headers>
-                        <span>Links</span>
+                        <span>Files</span>
                         <img src='../assets/icons/add.svg' onClick={clickAdd} />
                     </Headers>
-                    <article>
+                    <article className='listGrid'>
                         {
                             archivos.map((file: Archive, i: number) => {
                                 let color = '#b5abab';
@@ -81,8 +81,8 @@ const FileList = (): JSX.Element => {
                                 if (i % 2 == 0) color = '#ecdcdc';
 
                                 return (
-                                    <div key={file.name} style={{ backgroundColor: color, width: '100%', textAlign: 'center' }} className='container_links'>
-
+                                    <div key={file.name} style={{ width: '100%', textAlign: 'center' }} className='container_links'>
+                                        <span>{++i}</span>
                                         <span onClick={ReadFile} id={file.name}>
                                             {file.name}
                                         </span>

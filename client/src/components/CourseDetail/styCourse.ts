@@ -5,13 +5,12 @@ export const Content = styled.main`
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: 100px 300px auto;
+  grid-template-columns: 140px 300px auto;
   background-color: #5b6066;
 
   .item-grid {
     &:nth-child(1) {
       grid-row: 1/3;
-      background-color: #9cb0c7;
     }
     &:nth-child(2) {
       grid-row: 1/3;
@@ -21,11 +20,32 @@ export const Content = styled.main`
     }
   }
 
-  .viewSidebar {
-    background-color: #869bb3;
-  }
-  .object{
+  .object {
     grid-column: 3/4;
+  }
+
+  .listGrid {
+    position: relative;
+    height: calc(100% - 30px);
+    overflow: hidden;
+    overflow-y: scroll;
+    display: grid;
+    grid-template-rows: repeat(auto-fill, 40px);
+    /* border: solid 1px red; */
+    background-color: #35789d;
+  }
+
+  .listGrid::-webkit-scrollbar {
+    /* background-color: #24536e; */
+    width: 0px;
+  }
+  /* article::-webkit-scrollbar-track{
+    background-color:orange;
+  } */
+  .listGrid::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background-color: white;
+    border: 3px solid orange;
   }
 `;
 
@@ -47,18 +67,12 @@ export const  Div=styled.div`
      */        
 `
 export const ViewFields = styled.section`
-  /* display: none; */
-  position: absolute;
-  top: 0;
-  left: 100px;
   height: 99vh;
   width: 300px;
-  /* border: 1px solid blue; */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #9cb0c7;
-  /* pointer-events: none; */
+  background-color: #4784a7d1;
 `;
 
