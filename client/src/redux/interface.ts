@@ -13,6 +13,10 @@ export enum Datatypes {
   DELETE_LINK,
   FIND_COURSE,
   CHANGE_VIEW,
+  CREATE_TASK,
+  GET_TASKS,
+  DELETE_TASK,
+  TASK_TACH
 }
 
 export interface Course {
@@ -52,6 +56,11 @@ export interface CourseDetail{
     url:string
   }
   viewSidebar: string
+}
+
+export interface Task{
+  text:string,
+  id:number
 }
 
 export interface CREATE_USER{
@@ -129,7 +138,26 @@ export interface CHANGE_VIEW{
   payload:string
 }
 
+//=============================00
 
+export interface CREATE_TASK{
+  type: Datatypes.CREATE_TASK,
+  payload:string
+}
+
+export interface GET_TASKS{
+  type: Datatypes.GET_TASKS,
+  payload:Task[]
+}
+
+export interface DELETE_TASK{
+  type:Datatypes.DELETE_TASK,
+  payload:Task
+}
+export interface TASK_TACH{
+  type:Datatypes.TASK_TACH,
+  payload:Task
+}
 
 
 //===============================
@@ -150,4 +178,8 @@ export  type Actions =
   | DELETE_LINK
   | UPDATE_LINK
   | FIND_COURSE
-  | CHANGE_VIEW;
+  | CHANGE_VIEW
+  | CREATE_TASK
+  | GET_TASKS
+  | DELETE_TASK
+  | TASK_TACH

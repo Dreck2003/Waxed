@@ -5,6 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100vh;
+  min-height: 100vh;
 }
 
 code {
@@ -17,3 +19,4 @@ code {
   padding:0px;
   margin:0px;
 }
+

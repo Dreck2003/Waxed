@@ -1,42 +1,38 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-
-export const ContainerList=styled.div`
-    width:96%;
-    margin: 0px 2%;
-    height:400px;
-    /* background-color:blue; */
-    border:3px dashed blue;
-    color:white;
-
+export const ContainerList = styled.div`
+  width: 96%;
+  margin: 0px 2%;
+  height: 400px;
+  /* background-color:blue; */
+  border: 3px dashed blue;
+  color: white;
 `;
 
 export const ListLink = styled.div`
   margin-top: -50px;
   width: 96%;
   height: 300px;
-  border: 2px solid blue;
+  /* border: 2px solid blue; */
 
   .listFormLinks {
     width: 100%;
     height: 100%;
   }
 
-  article {
-    position: relative;
-    height: calc(100% - 30px);
-    overflow: hidden;
-    
-  }
+  
 
   .container_links {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 0.5fr 2fr 1fr;
     pointer-events: auto;
-    border-radius: 5px;
-    margin: 5px 0px;
+    color: white;
+    height: 40px;
+    align-items: center;
     a {
       margin-right: 20px;
+      text-decoration: none;
+      color: white;
     }
 
     img {
@@ -48,16 +44,25 @@ export const ListLink = styled.div`
     }
   }
 
+  .container_links:hover {
+    background-color: #458db5;
+  }
+
   .newLink {
     position: absolute;
     bottom: 0px;
     width: 100%;
-    background-color: red;
+    background-color: #6083b2cc;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    color: white;
+    input[type="file"]{
+      padding: 0;
+      margin: 20px 0px;
+    }
 
     /* height: 100%; */
     button {
@@ -71,10 +76,18 @@ export const ListLink = styled.div`
   }
 `;
 
-
-export const Headers = styled.div`
+export const Headers = styled.header`
   width: 100%;
-  height: 30px;
+  /* height: 30px; */
+  padding: 7px 0px;
   display: flex;
   justify-content: space-evenly;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+  background-color: #2b6e93;
+
+  img {
+    cursor: pointer;
+  }
 `;

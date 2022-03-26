@@ -10,13 +10,6 @@ interface Prop{
 }
 const Corte ='http://localhost:3001/'
 
-const srcToUrl=(src:string) => {
-    const data=src.split(`${"\\"}`).slice(1).join('/')
-    return Corte+data
-
-}
-
-
 const Card=({img,info,name}:Prop):JSX.Element=>{
     const navigate=useNavigate();
 

@@ -67,7 +67,7 @@ const LinkList=(): JSX.Element => {
                         <span>Links</span>
                         <img src='../assets/icons/add.svg' onClick={clickAdd} />
                     </Headers>
-                    <article>
+                    <article className="listGrid">
                         {
                             links.map((link: Link, i: number) => {
                                 let color = '#b5abab';
@@ -75,7 +75,7 @@ const LinkList=(): JSX.Element => {
                                 if (i % 2 == 0) color = '#ecdcdc';
 
                                 return (
-                                    <Links name={link.name} color={color} url={link.url} key={link.name} deleteUrl={formDeleteLink}/>
+                                    <Links name={link.name} index={++i} color={color} url={link.url} key={link.name} deleteUrl={formDeleteLink}/>
                                 )
 
 
@@ -95,7 +95,7 @@ const LinkList=(): JSX.Element => {
     )
 }
 
-const Links = ({ color, name, url, deleteUrl }: any): JSX.Element => {
+const Links = ({ color, name, url, deleteUrl,index }: any): JSX.Element => {
 
 
     // const [editable,setEditable]=useState<boolean>(false);
@@ -103,7 +103,8 @@ const Links = ({ color, name, url, deleteUrl }: any): JSX.Element => {
     //faltaria poder editar el nombre del url
 
     return (
-        <div key={name} style={{ backgroundColor: color, width: '100%', textAlign: 'center' }} className='container_links'>
+        <div key={name} style={{  width: '100%', textAlign: 'center' }} className='container_links'>
+            <span>{index}</span>
             <a href={url} target='_blank'>
                 {name}
             </a>

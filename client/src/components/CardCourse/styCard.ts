@@ -1,18 +1,18 @@
 import styled from 'styled-components';
 
 export const Course = styled.section`
-  width: 290px;
-  height: 380px;
+  width: 280px;
+  height: 360px;
   margin: 20px 5px;
   border-radius: 10px;
   overflow: hidden;
-  background-color: white;
+  background-color: #d7e2e8;
   cursor: pointer;
   position: relative;
 
   .imagen {
     width: 100%;
-    height: 200px;
+    height: 180px;
     position: relative;
 
     img {
