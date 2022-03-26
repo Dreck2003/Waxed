@@ -82,7 +82,7 @@ const changeSideBar=(type:string)=>{
             return <Notes/>
 
         default:
-            return <h1>TODO APP</h1>
+            return <Notes />
 
     }
 }

@@ -24,29 +24,7 @@ export const Content = styled.main`
     grid-column: 3/4;
   }
 
-  .listGrid {
-    position: relative;
-    height: calc(100% - 30px);
-    overflow: hidden;
-    overflow-y: scroll;
-    display: grid;
-    grid-template-rows: repeat(auto-fill, 40px);
-    /* border: solid 1px red; */
-    background-color: #35789d;
-  }
-
-  .listGrid::-webkit-scrollbar {
-    /* background-color: #24536e; */
-    width: 0px;
-  }
-  /* article::-webkit-scrollbar-track{
-    background-color:orange;
-  } */
-  .listGrid::-webkit-scrollbar-thumb {
-    border-radius: 20px;
-    background-color: white;
-    border: 3px solid orange;
-  }
+  
 `;
 
 export const Container=styled.div`

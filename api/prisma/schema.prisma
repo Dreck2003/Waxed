@@ -39,12 +39,15 @@ model Course {
 
 model Archive {
   id       Int      @id @default(autoincrement())
+  
   name     String   @unique
   url      String   
+  
   course   Course   @relation(fields: [courseId], references: [name])
   courseId String //RElacion con el nombre del curso el id es el nombre
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
+
 }
 
 model Link {
@@ -54,6 +57,16 @@ model Link {
 
   course   Course   @relation(fields: [courseId], references: [name])
   courseId String
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+}
+
+
+model Task{
+  id    Int @id @default(autoincrement()) 
+  text  String 
+  tach  Boolean @default(false)
+
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
 }

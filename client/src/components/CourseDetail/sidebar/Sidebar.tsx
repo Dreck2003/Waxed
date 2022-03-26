@@ -46,7 +46,7 @@ const Sidebar = (): JSX.Element => {
                 </li>
                 <li onClick={() => dispatch(viewSidebar('summary'))}>
                     <div>
-                        <img src='../../../../assets/icons/note.svg' alt='files' />
+                        <img src='../../../../assets/icons/notes.svg' alt='files' />
                     </div>
                     <span>Summary</span>
 
