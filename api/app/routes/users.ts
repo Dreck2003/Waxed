@@ -12,5 +12,5 @@ const router = Router();
 router.post('/',validateUser,getUser);
 router.post('/create',validateCreate,createUser);
 
-
+console.log('termino de leer user')
 module.exports=router;

@@ -1,7 +1,11 @@
+import { useSelector } from 'react-redux';
+import { State } from '../../../redux/reducers';
 import {ContainerNotes, NoteText} from './Notas';
 
 
 const Notes=():JSX.Element=>{
+
+    const notas=useSelector((state:State)=>state.courseDetail.summary);
 
     return(
         <>
@@ -11,9 +15,8 @@ const Notes=():JSX.Element=>{
                 </header>
                 <NoteText >
                     <main contentEditable='true' onBlur={()=>{console.log('pierde el foco?')}}>
-
-                    </main>
-                    
+                        {notas}
+                    </main>                    
                 </NoteText>
             </ContainerNotes>
 

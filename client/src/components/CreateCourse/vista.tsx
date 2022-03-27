@@ -4,6 +4,7 @@ import { validateInfo, validator } from '../../helpers/validateForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { createCourse } from '../../redux/actions/course';
 import { State } from '../../redux/reducers/index';
+import { dateToString } from '../../helpers/date';
 
 
 
@@ -77,8 +78,13 @@ const Vista = ({ changeVisible, visible, look }: Prop): JSX.Element => {
         }
 
         const course = new FormData(event.target);
+        let day:any=new Date();
+        day=day.toString();
+        course.append('date', dateToString(day));
+        // console.log(user!.userName);
+        // course.append('userName',user!.userName);
 
-        dispatch(createCourse(user!.name, course));
+        dispatch(createCourse(course));
 
         //Reseteo de las inputs jajaja
 
@@ -121,7 +127,7 @@ const Vista = ({ changeVisible, visible, look }: Prop): JSX.Element => {
                     <header>Create the Course</header>
                     <Input type='text' placeholder='Course name...' name='name' />
                     <TextArea placeholder='Description of course...' name='content' />
-                    <input type='hidden' value={user!.email} name='email' />
+                    <input type='hidden' value={user!.userName} name='userName' />
                     <SubFile >
                         <span>Add Image</span>
                         <i>+</i>

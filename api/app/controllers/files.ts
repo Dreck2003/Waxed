@@ -12,24 +12,20 @@ const srcToUrl = (src: string) => {
 
 const pathDelete=(path:string) => {
 
-  //http://loca:
-
   const url=path.split('/').slice(3).join('/');
 
   return 'public/'+url;
-
 }
-
 
 const secreto = "FOO";
 
 let storage = multer.diskStorage({
   destination: (req: Req, file, cb) => {
-    const { courseId } = req.body;
+    const { courseId,userName } = req.body;
     console.log(req.body);
 
     let curso = courseId ? courseId : secreto;
-    const path = `public/${curso}/files`;
+    const path = `public/${userName}/${curso}/files`;
 
     if (!fs.existsSync(path)) {
       console.log("no existe la ruta");
@@ -53,13 +49,13 @@ export const createFile = async (req: Req, res: Res, next: Next) => {
   const { nameFile, courseId } = req.body;
 
   try {
-    const fileExist = await prisma.archive.findUnique({
-      where: {
-        name: nameFile,
-      },
-    });
+    // const fileExist = await prisma.archive.findUnique({
+    //   where: {
+    //     name: nameFile,
+    //   },
+    // });
 
-    if (fileExist) return res.send({ error: "The file exist" });
+    // if (fileExist) return res.send({ error: "The file exist" });
 
     //Si no existe un archivo anteriormente:
 
@@ -67,9 +63,10 @@ export const createFile = async (req: Req, res: Res, next: Next) => {
       data: {
         name: nameFile,
         url: srcToUrl(req.file!.path),
-        courseId: courseId,
+        courseId: Number(courseId),
       },
       select: {
+        id:true,
         name: true,
         url: true,
       },
@@ -82,19 +79,19 @@ export const createFile = async (req: Req, res: Res, next: Next) => {
 };
 
 export const deleteFile = async (req: Req, res: Res, next: Next) => {
-  const { nameFile, courseId } = req.body;
+  const { fileId } = req.body;
+  //fileId -->id Number   courseId --> id Number 
 
-  console.log("deleteFile: ", nameFile, courseId);
+  console.log("deleteFile: ", fileId);
 
-  if (!nameFile || !courseId)
+  if (!fileId )
     return res.send({ error: "The fields are empty", content: null });
 
   try {
     const oldFile = await prisma.archive.delete({
-      where: {
-        name: nameFile,
-      },
+      where: {id:fileId},
       select: {
+        id:true,
         name: true,
         url: true,
       },
@@ -117,13 +114,11 @@ export const deleteFile = async (req: Req, res: Res, next: Next) => {
 };
 
 export const getFile = async (req: Req, res: Res, next: Next) => {
-  const { nameFile } = req.body;
+  const { fileId } = req.body; //fileId -->number 
 
   try {
     const fileToExport = await prisma.archive.findUnique({
-      where: {
-        name: nameFile,
-      },
+      where: {id:fileId},
       select: {
         url: true,
       },
@@ -139,6 +134,7 @@ export const getFile = async (req: Req, res: Res, next: Next) => {
 };
 
 export const getFiles = async (req: Req, res: Res, next: Next) => {
+  
   try {
     const files = await prisma.archive.findMany({
       select: {

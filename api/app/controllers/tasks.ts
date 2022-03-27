@@ -11,12 +11,22 @@ import prisma from '../models/prisma';
 export const createTask=async(req:Req, res:Res, next:Next)=>{
 
     const text=req.body.text;
+    const id=req.body.userName;
 
     try{
         console.log(req.body);
 
+        const user=await prisma.user.findUnique({
+            where:{userName:id}
+        });
+        
+        if(!user) return res.status(404).send({error:'user exist'});
+
         const newTask=await prisma.task.create({
-            data:{text}
+            data:{
+                text:text,
+                userId:user.id
+            }
         })
         console.log(newTask);
         return res.send({error:null,content:newTask});
@@ -55,9 +65,9 @@ export const tachTask=async(req:Req, res:Res, next:Next) =>{
     const id=req.body.id;
     const tach=req.body.tach;
     try{
-        console.log(req.body);
+        console.log(typeof tach,typeof id);
 
-        if(!id || ! tach || typeof tach ==='boolean') return res.status(404).send({ error: "bad fields" });
+        if(!id || typeof tach !=='boolean') return res.status(404).send({ error: "bad fields" });
         const newTaskTach=await prisma.task.update({
             where:{id:Number(id)},
             data:{tach}
@@ -78,6 +88,7 @@ export const getTasks=async(req:Req, res: Res, next: Next)=>{
     try{
 
         const tasks=await prisma.task.findMany();
+        console.log(tasks)
 
         return res.send({error:null,content:tasks});
 

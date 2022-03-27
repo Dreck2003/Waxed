@@ -8,14 +8,12 @@ type Curso=Course | null;
 
 const URL_LINK = "http://localhost:3001/api/links";
 
-
-export const createLink=(name:string,courseId:string,url:string)=>{
+export const createLink=(name:string,courseId:number,url:string)=>{
     console.log('los parametros de la creacion del link son : ',name ,courseId,url)
 
     return async(dispatch: Dispatch)=>{
 
         try{
-
             const {data}= await axios.post(URL_LINK,{nameLink:name,courseId:courseId,url:url});
             console.log('la respuesta es: ',data)
 
@@ -81,12 +79,12 @@ export const createLink=(name:string,courseId:string,url:string)=>{
 
 
 
-export const deleteLink = (name: string) => {
+export const deleteLink = (id:number) => {
     // console.log('los links se van a borrar wajajwaja');
   return async (dispatch: Dispatch) => {
     try {
       
-        const {data}=await axios.delete(URL_LINK,{data:{nameLink:name}})
+        const {data}=await axios.delete(URL_LINK,{data:{idLink:id}})
 
         if(data.error) return console.log('error DeleteLink: ',data.error);
 

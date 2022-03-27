@@ -5,9 +5,6 @@ import { Dispatch } from "redux";
 
 const URL_TASK = "http://localhost:3001/api/tasks";
 
-interface Task {
-  text: string;
-}
 
 export const getTasks = () => {
   return async (dispatch: Dispatch) => {
@@ -16,8 +13,9 @@ export const getTasks = () => {
 
       if (data.error) throw new Error("existe un error en getTasks");
 
+      console.log('tasks: ',data.content);
       dispatch({
-        type: Datatypes,
+        type: Datatypes.GET_TASKS,
         payload: data.content,
       });
     } catch (error) {
@@ -26,13 +24,14 @@ export const getTasks = () => {
   };
 };
 
-export const createTask = ({ text }: Task) => {
+export const createTask = ( text : string) => {
   return async (dispatch: Dispatch) => {
     try {
       const { data } = await axios.post(URL_TASK, { text });
 
       if (data.error) throw new Error("createTask");
 
+      console.log(data.content);
       dispatch({
         type: Datatypes.CREATE_TASK,
         payload: data.content,
@@ -52,7 +51,7 @@ export const deleteTask=(id:number) => {
       const {data}=await axios.delete(URL_TASK+`/${id}`);
 
       if(data.error) throw new Error('Delete Task');
-
+      console.log('task deleted: ',data.content);
       dispatch({
         type:Datatypes.DELETE_TASK,
         payload:data.content
@@ -81,7 +80,6 @@ export const tachTask=(id:number,tach:boolean)=>{
         type:Datatypes.TASK_TACH,
         payload:data.content
       })
-
 
 
     }catch(error){

@@ -6,11 +6,12 @@ import axios from 'axios';
 const URL = "http://localhost:3001/api/courses";
 
 
-export const createCourse = (name: string, curso: any) => {
+export const createCourse = ( curso: any) => {
 
   return async (dispatch: Dispatch) => {
 
     try{
+      console.log(curso);
 
       const {data}= await axios({
         method:'POST',
@@ -21,7 +22,7 @@ export const createCourse = (name: string, curso: any) => {
       })
       if (data.error)
         return console.error("existe error createCourse: ", data.error);
-
+      console.log(data.content)
       dispatch({
         type: Datatypes.CREATE_COURSE,
         payload: data.content,
@@ -38,14 +39,14 @@ export const createCourse = (name: string, curso: any) => {
   };
 };
 
-export const getCourses = () => {
+export const getCourses = (user:string) => {
   
     return async (dispatch: Dispatch) => {
 
       try{
 
-        const {data}=await axios(URL);
-
+        const {data}=await axios(`${URL}/${user}`);
+        console.log(data);
         dispatch({
           type:Datatypes.GET_COURSES,
           payload:data.content,
@@ -56,27 +57,5 @@ export const getCourses = () => {
       }
 
 
-
-
-      
-
-
-
-    // try {
-    //   const courses: Course[] = [];
-
-    //   await LocalForage.iterate((valor, key) => {
-    //     courses.push(valor as Course);
-    //   });
-
-    //   dispatch({
-    //     type: Datatypes.GET_COURSES,
-    //     payload: courses,
-    //   });
-
-    // } catch (err) {
-
-    //   console.error("38- ", err);
-    // }
   };
 };

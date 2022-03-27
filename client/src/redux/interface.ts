@@ -33,11 +33,13 @@ export interface Link {
   url: string;
   name: string;
   cursoId: string;
+  id?:number;
 }
 export interface Archive {
   name: string;
   cursoId: string;
-  url:string
+  url:string,
+  id:number
 }
 
 export interface User {
@@ -51,6 +53,7 @@ export interface User {
 export interface CourseDetail{
   links:Link[],
   files:Archive[],
+  summary:string,
   seeFile:{
     name:string,
     url:string
@@ -60,7 +63,8 @@ export interface CourseDetail{
 
 export interface Task{
   text:string,
-  id:number
+  id:number,
+  tach:boolean
 }
 
 export interface CREATE_USER{
@@ -123,7 +127,7 @@ export interface DELETE_FILE{
 }
 export interface GET_FILE{
   type:Datatypes.GET_FILE,
-  payload:string
+  payload:number
 }
 
 export interface CLEAN_FILE {
@@ -142,7 +146,7 @@ export interface CHANGE_VIEW{
 
 export interface CREATE_TASK{
   type: Datatypes.CREATE_TASK,
-  payload:string
+  payload:Task
 }
 
 export interface GET_TASKS{

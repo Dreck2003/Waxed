@@ -34,15 +34,13 @@ export const createLink=async(req:Req, res:Res, next: Next)=>{
 
 export const deleteLink=async(req: Req, res: Res,next: Next)=>{
 
-    const {nameLink}=req.body;
+    const {idLink}=req.body;
 
-    if(!nameLink) return res.send({error:'nameLink not exist',content:null});
+    if(!idLink) return res.send({error:'nameLink not exist',content:null});
 
     try{
         const linkExist=await prisma.link.findUnique({
-            where:{
-                name:nameLink
-            }
+            where:{id:idLink}
         });
 
         if(!linkExist) return res.status(404).send({error:'link not exist',content:null});
@@ -50,7 +48,7 @@ export const deleteLink=async(req: Req, res: Res,next: Next)=>{
 
         const oldLink=await prisma.link.delete({
             where:{
-                name:nameLink
+                id:idLink
             },
             select:{
                 name:true,

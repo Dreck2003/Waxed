@@ -45,7 +45,6 @@ export const getUser= async(req: Request, res: Response, next: NextFunction)=>{
     const {password,userName} = req.body;
     console.log(password,userName);
 
-
     try{
         
         const user = await prisma.user.findUnique({

@@ -15,6 +15,7 @@ const FileList = (): JSX.Element => {
     const dispatch = useDispatch();
     const { id } = useParams();
     const archivos = useSelector((state: State) => state.courseDetail.files);
+    const user = useSelector((state: State) => state.user);
     console.log('los links son: ', archivos);
 
 
@@ -36,9 +37,9 @@ const FileList = (): JSX.Element => {
         setAdd(!add);
         // event.target.nameLink.value = '';
         // event.target.urlLink.value = '';
-
         console.log(event)
         const sendData = new FormData(event.target);
+        sendData.append('userName',user!.userName);
 
         dispatch(createFile(sendData));
 
@@ -60,7 +61,7 @@ const FileList = (): JSX.Element => {
 
     const FileDelete = (event: any) => {
 
-        dispatch(deleteFile(event.target.id, id as string))
+        dispatch(deleteFile(event.target.id,))
 
 
     }
@@ -76,18 +77,15 @@ const FileList = (): JSX.Element => {
                     <article className='listGrid'>
                         {
                             archivos.map((file: Archive, i: number) => {
-                                let color = '#b5abab';
-
-                                if (i % 2 == 0) color = '#ecdcdc';
 
                                 return (
-                                    <div key={file.name} style={{ width: '100%', textAlign: 'center' }} className='container_links'>
+                                    <div key={file.id} style={{ width: '100%', textAlign: 'center' }} className='container_links'>
                                         <span>{++i}</span>
-                                        <span onClick={ReadFile} id={file.name}>
+                                        <span onClick={ReadFile} id={file.id}>
                                             {file.name}
                                         </span>
                                         <div>
-                                            <img src='../assets/icons/trash.svg' id={file.name} onClick={FileDelete} />
+                                            <img src='../assets/icons/trash.svg' id={file.id!.toString()} onClick={FileDelete} />
                                             {/* <img src='../assets/icons/pencil.svg' /><br /> */}
                                         </div>
 

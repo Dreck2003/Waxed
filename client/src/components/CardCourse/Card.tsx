@@ -6,18 +6,19 @@ interface Prop{
     img:string,
     info:string,
     name:string,
-    // actualizado:Date
+    date:string,
+    id:number
 }
 const Corte ='http://localhost:3001/'
 
-const Card=({img,info,name}:Prop):JSX.Element=>{
+const Card=({img,info,name,date,id}:Prop):JSX.Element=>{
     const navigate=useNavigate();
 
     let urlImg = img ? img: 'assets/images/default.jpg' ;
     let nameFinal=name[0].toUpperCase()+name.slice(1).toLowerCase();
 
     return (
-        <Course onClick={()=>{navigate(`/courses/${name}`)}}>
+        <Course onClick={()=>{navigate(`/courses/${id}`)}}>
             <div className="imagen">
                 <img src={urlImg} alt='img_default'/>
                {/* <div className="encima">IMAGE NOT FOUND</div>  */}
@@ -29,7 +30,7 @@ const Card=({img,info,name}:Prop):JSX.Element=>{
                 </div>
             </Informer> 
             <Visto>
-                fala actualizar
+                visto:{date}
             </Visto>
         </Course>
     )
