@@ -2,12 +2,13 @@ import { Actions,CourseDetail,Datatypes } from "../interface";
 
 const initialCourseDetail:CourseDetail = {
     links: [],
-    files: [], 
+    files: [],
+    summary:'', 
     seeFile:{
         name:'',
         url:''
     },
-    viewSidebar:''
+    viewSidebar:'',
 }
 
 export const courseDetailReducer=(state=initialCourseDetail,action:Actions):CourseDetail=>{
@@ -92,7 +93,9 @@ export const courseDetailReducer=(state=initialCourseDetail,action:Actions):Cour
             //En el payload de la action me llega el nombre del archivo:
             console.log('la action es: ',action)
 
-            const file=state.files.find(file=>file.name===action.payload);
+            const file = state.files.find(
+              (file) => file.id === Number(action.payload)
+            );
             console.log('el archivo para ver es: ',file)
 
 

@@ -1,5 +1,9 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Aside, Content, Header, List, Modal, TodoBar } from "./StyTodo";
+import {createTask, deleteTask, getTasks, tachTask} from '../../redux/actions/task';
+import { useDispatch, useSelector } from "react-redux";
+import { State } from "../../redux/reducers";
+
 
 interface Style{
     display: string,
@@ -16,9 +20,63 @@ const close:Style={
 const Todo=()=>{
 
     const [vist,setVist]=useState<boolean>(false);
+    const dispatch=useDispatch();
+    const tasks=useSelector((state:State)=>state.tasks);
+
+    useEffect(() =>{
+
+        console.log('las tareas con : ',tasks)
+        if(tasks && !tasks.length){
+            dispatch(getTasks());
+        }
+    },[]);
+
+    const sendTask=(event:any)=>{
+        event.preventDefault();
+
+        if(!(event.target.text.value)){
+            alert('Falta the task');
+        }else{
+            dispatch(createTask(event.target.text.value));
+            event.target.text.value='';
+        }
+    }
+    const tacharTask=(event:any)=>{
+        event.preventDefault();
+        const task=tasks!.find(task=>task.id==event.target.id);
+        console.log('el task change es: ',task)
+        const change=task!.tach? false:true;
+
+        dispatch(tachTask(task!.id,change))
+        // console.log(event.target.parentNode);
+
+
+        // console.log(task);
+        console.log('El cambio es: ',change)
+        if(!change){
+
+            event.target.style.textDecoration = 'none';
+            event.target.parentNode.style.opacity='0.7';
+        }else{
+            event.target.style.textDecoration = 'line-through';
+            event.target.parentNode.style.opacity = '1';
+        }
+
+    }
+
+    const tasKDelete=(event:any) => {
+
+        event.preventDefault();
+        console.log(event.target.id);
+        dispatch(deleteTask(event.target.id));
+    }
+
+
+
 
     return (
         <TodoBar >
+            {console.log('todo renderizado: ',tasks)}
             <span onClick={() => setVist(!vist)} className='buttonLink'>
                 Tasks
             </span>
@@ -32,21 +90,34 @@ const Todo=()=>{
                         </button>
                    </header>
                    <hr/>
-                    <List className='listGrid'>
-                        <div>
-                            uno
-                            <img src='../../../assets/icons/check.svg' alt='good' />
-                            <img src='../../../assets/icons/trash.svg' alt='good' />
-                        </div>
-                        <div>
-                            Dos
-                            <img src='../../../assets/icons/check.svg' alt='good' />
-                            <img src='../../../assets/icons/trash.svg' alt='good' />
-                        </div>
+                    <List className='listGrid scroll'>
+                        {tasks && tasks.length ?
+
+                            tasks.map(task =>{
+                                console.log(task.tach)
+                                const color=task.tach? 
+                                    { backgroundColor:'#386076',opacity:'0.7'}
+                                :
+                                { opacity: '1'}
+
+                                return (
+                                    <div key={task.id} style={color}>
+                                        <span onClick={tacharTask} id={task.id.toString()}>
+                                            {task.text} {task.tach.toString()}
+                                        </span>
+                                        {/* <img src='../../../assets/icons/check.svg' alt='check' /> */}
+                                        <img src='../../../assets/icons/trash.svg' alt='delete' id={task.id.toString()} onClick={tasKDelete}/>
+                                    </div>  
+                                )
+                            })
+                            :
+                            <span>Not have tasks</span>
+
+                        }
 
                     </List>
-                    <Aside>
-                        <input type='text' placeholder='New Todo' />
+                    <Aside onSubmit={sendTask}>
+                        <input type='text' placeholder='New Todo' name="text"/>
                         <button>Add Task</button>
                     </Aside>
                 </Content>

@@ -12,11 +12,12 @@ import Todo from '../Todo/Todo';
 const Home =():JSX.Element=>{
 
     const dipatch=useDispatch();
-    const estado=useSelector((state:State)=>state.courses);
+    const estado = useSelector((state: State) => state.courses);
+    const user = useSelector((state: State) => state.user);
 
     useEffect(()=>{
-
-        dipatch(getCourses())
+        console.log('traer cursos: ',user?.userName);
+        dipatch(getCourses(user!.userName))
 
     }, [])
         // debugger;
@@ -28,10 +29,10 @@ const Home =():JSX.Element=>{
             <main>
 
                 <div className='cards'>
-                    {estado.length ? estado.map((curso) => {
+                    {estado.length ? estado.map((curso:any) => {
                         // console.log(curso)
                         return (
-                            <Card key={curso.name} img={curso.img!} info={curso.content!} name={curso.name!} />
+                            <Card key={curso.name} img={curso.img!} info={curso.content!} name={curso.name!} date={curso.date} id={curso.id}/>
                         )
                     })
                         :

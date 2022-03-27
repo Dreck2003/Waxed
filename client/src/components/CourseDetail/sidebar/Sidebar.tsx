@@ -11,8 +11,10 @@ const Sidebar = (): JSX.Element => {
     const dispatch=useDispatch();
     const {id}=useParams();
     const cursos=useSelector((state:State)=>state.courses);
+    console.log('cursos: ',cursos);
 
-    const urlImage=cursos.find((course:any)=>course.name===id);
+    const urlImage=cursos.find((course:any)=>course.id===Number(id));
+    console.log('course Found: ',urlImage);
 
     return (
         <SectionBar className="item-grid">

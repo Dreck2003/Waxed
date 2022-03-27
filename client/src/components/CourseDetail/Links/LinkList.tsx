@@ -40,7 +40,7 @@ const LinkList=(): JSX.Element => {
         event.preventDefault();
         const name = event.target.nameLink.value;
         const url = event.target.urlLink.value;
-        dispatch(createLink(name, id as string, url));
+        dispatch(createLink(name, Number(id), url));
         setAdd(!add);
         event.target.nameLink.value = '';
         event.target.urlLink.value = '';
@@ -50,12 +50,11 @@ const LinkList=(): JSX.Element => {
 
         event.preventDefault();
         setAdd(!add);
-
-    }
+   }
 
     const formDeleteLink = (event:any) => {
         console.log(event.target);
-        dispatch(deleteLink(event.target.id))
+        dispatch(deleteLink(Number(event.target.id)))
 
     }
 
@@ -70,15 +69,9 @@ const LinkList=(): JSX.Element => {
                     <article className="listGrid">
                         {
                             links.map((link: Link, i: number) => {
-                                let color = '#b5abab';
-
-                                if (i % 2 == 0) color = '#ecdcdc';
-
                                 return (
-                                    <Links name={link.name} index={++i} color={color} url={link.url} key={link.name} deleteUrl={formDeleteLink}/>
+                                    <Links name={link.name} index={++i} id={link.id} url={link.url} key={link.id} deleteUrl={formDeleteLink}/>
                                 )
-
-
                             })
                         }
 
@@ -95,7 +88,7 @@ const LinkList=(): JSX.Element => {
     )
 }
 
-const Links = ({ color, name, url, deleteUrl,index }: any): JSX.Element => {
+const Links = ({ id, name, url, deleteUrl,index }: any): JSX.Element => {
 
 
     // const [editable,setEditable]=useState<boolean>(false);
@@ -103,13 +96,13 @@ const Links = ({ color, name, url, deleteUrl,index }: any): JSX.Element => {
     //faltaria poder editar el nombre del url
 
     return (
-        <div key={name} style={{  width: '100%', textAlign: 'center' }} className='container_links'>
+        <div  style={{  width: '100%', textAlign: 'center' }} className='container_links'>
             <span>{index}</span>
             <a href={url} target='_blank'>
                 {name}
             </a>
             <div>
-                <img src='../assets/icons/trash.svg' onClick={deleteUrl} id={name} />
+                <img src='../assets/icons/trash.svg' onClick={deleteUrl} id={id} />
                 {/* <img src='../assets/icons/pencil.svg' /><br /> */}
             </div>
         </div>

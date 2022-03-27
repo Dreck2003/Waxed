@@ -3,7 +3,7 @@ import { useDispatch,useSelector } from 'react-redux';
 import Nav from '../Nav/Nav';
 import {Container,Content, ViewFields} from './styCourse';
 import {useEffect, useState} from 'react';
-import { getCourseDetail } from '../../redux/actions/courseDetail';
+import { changeDate, getCourseDetail } from '../../redux/actions/courseDetail';
 import { State } from '../../redux/reducers';
 import { cleanFileData } from '../../redux/actions/file';
 import Sidebar from './sidebar/Sidebar';
@@ -11,6 +11,7 @@ import LinkList from './Links/LinkList';
 import FileList from './Links/FileList';
 import Notes from './Notes/Notes';
 import Calculadora from './Calculadora/Calculadora';
+import {dateToString} from '../../helpers/date';
 
 interface Course {
     name: string;
@@ -22,6 +23,10 @@ interface Course {
     lastSeen: Date;
 }
 
+enum dias{
+    lunes, martes,miercoles
+}
+
 const Course=():JSX.Element=>{
 
     const {id}=useParams();
@@ -31,7 +36,11 @@ const Course=():JSX.Element=>{
 
     useEffect(() =>{
 
-        dispatch(getCourseDetail(id as string));
+        dispatch(getCourseDetail(id!));
+        let day:any=new Date();
+        day=day.toString();
+        // console.log(dateToString(day));
+        // changeDate(Number(id), dateToString(day))
 
         return ()=>{
             console.log('se desmontara el componente curso!');
@@ -44,6 +53,7 @@ const Course=():JSX.Element=>{
     return(
         <Container>
             {/* <Nav/> */}
+            {console.log(dias['martes'])}
             <Content>
                 <Sidebar />
                 {console.log('seeFile', archivo)}
