@@ -16,7 +16,8 @@ export enum Datatypes {
   CREATE_TASK,
   GET_TASKS,
   DELETE_TASK,
-  TASK_TACH
+  TASK_TACH,
+  CLEAN_COURSE,
 }
 
 export interface Course {
@@ -165,6 +166,9 @@ export interface TASK_TACH{
 
 
 //===============================
+export interface CLEAN_COURSE {
+  type: Datatypes.CLEAN_COURSE;
+}
 
 
 
@@ -187,3 +191,4 @@ export  type Actions =
   | GET_TASKS
   | DELETE_TASK
   | TASK_TACH
+  | CLEAN_COURSE

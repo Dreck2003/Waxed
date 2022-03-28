@@ -28,9 +28,11 @@ const FileList = (): JSX.Element => {
 
     }
 
-    const createFileEvent = async (event: React.ChangeEvent<HTMLFormElement>) => {
+    const createFileEvent = (event: React.ChangeEvent<HTMLFormElement>) => {
 
         event.preventDefault();
+
+        if(!event.target.nameFile.value) return null;
         // const name = event.target.nameLink.value;
         // const file = event.target.file.files[0];
         // dispatch(createFile(name,id as string,file));
@@ -96,7 +98,7 @@ const FileList = (): JSX.Element => {
                         }
 
                         <form className='newLink' style={heigth} autoComplete='off' onSubmit={createFileEvent}>
-                            <InputCrud type='text' name='nameFile' placeholder='name' />
+                            <InputCrud type='text' name='nameFile' placeholder='name' required />
                             <input type='hidden' value={id} name='courseId' style={{ display: 'none' }} />
                             <InputCrud type='file' name='miFile' placeholder='file' required accept='.pdf' />
                             <button>Create</button>

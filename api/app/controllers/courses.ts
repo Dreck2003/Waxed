@@ -117,7 +117,8 @@ export const getCourseDetail=async(req: Request, res: Response, next: NextFuncti
       where:{id:Number(id)},
       select:{
         link:true,
-        archive:true
+        archive:true,
+        summary:true
       }
     });
 
@@ -137,13 +138,16 @@ export const updateDateCourse=async(req:Request, res:Response,next:NextFunction)
 
     const id=req.body.id; // Id es el Id curso Int
     const date=req.body.date; //Es el date actualizado
+    const text=req.body.text;
+
+    const data= date ? {date}: {summary:text} 
 
     console.log('update course: ',req.body);
   try{
 
     const newCourse=await prisma.course.update({
       where:{id:id},
-      data:{date:date}
+      data:data
     })
 
     console.log('newCourse: ',newCourse);
@@ -157,27 +161,27 @@ export const updateDateCourse=async(req:Request, res:Response,next:NextFunction)
 
 }
 
-export const updateSummary=async(req:Request, res: Response, next: NextFunction)=>{
+// export const updateSummary=async(req:Request, res: Response, next: NextFunction)=>{
 
-  const text=req.body.text; //texto generico
-  const id=req.body.id; // EL id es el id delc curso Id
-  console.log(req.body);
+//   const text=req.body.text; //texto generico
+//   const id=req.body.id; // EL id es el id delc curso Id
+//   console.log(req.body);
 
-  try{
-    const newCourse=await prisma.course.update({
-      where:{id:id},
-      data:{summary:text}
-    })
+//   try{
+//     const newCourse=await prisma.course.update({
+//       where:{id:id},
+//       data:{summary:text}
+//     })
 
-    console.log(newCourse);
-    return res.send({error:null,content:''});
+//     console.log('new Course update summary: ',newCourse);
+//     return res.send({error:null,content:''});
 
-  }catch(error){
-    console.log('error en update summary: ',error);
-    return res.status(500).send({error});
-  }
+//   }catch(error){
+//     console.log('error en update summary: ',error);
+//     return res.status(500).send({error});
+//   }
 
-}
+// }
 
 
 

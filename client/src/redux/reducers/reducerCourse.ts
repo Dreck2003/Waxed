@@ -13,119 +13,110 @@ const initialCourseDetail:CourseDetail = {
 
 export const courseDetailReducer=(state=initialCourseDetail,action:Actions):CourseDetail=>{
 
-    switch(action.type){
+    switch (action.type) {
+      case Datatypes.FIND_COURSE:
+        console.log(action.payload);
 
-        case Datatypes.FIND_COURSE:
+        return {
+          ...state,
+          ...action.payload,
+        };
 
-            return {
-                ...state,
-                ...action.payload
-            };
+      case Datatypes.CREATE_FILE:
+        return {
+          ...state,
+          files: state.files.concat(action.payload),
+        };
 
-        case Datatypes.CREATE_FILE:
+      case Datatypes.UPDATE_FILE:
+        return {
+          ...state,
+          files: action.payload,
+        };
 
-            return {
-                ...state,
-                files:state.files.concat(action.payload)
-            }
+      case Datatypes.DELETE_FILE:
+        const oldFileName = action.payload;
+        console.log(oldFileName);
 
-        case Datatypes.UPDATE_FILE:
+        const files = state.files.filter(
+          (file) => file.name !== oldFileName.name
+        );
 
-            return {
-                ...state,
-                files:action.payload
-            }
+        if (state.seeFile.name === oldFileName.name) {
+          return {
+            ...state,
+            files: files,
+            seeFile: {
+              name: "",
+              url: "",
+            },
+          };
+        }
 
-        case Datatypes.DELETE_FILE:
+        return {
+          ...state,
+          files: files,
+        };
 
-        
-            const oldFileName = action.payload;
-            console.log(oldFileName)
+      case Datatypes.CREATE_LINK:
+        return {
+          ...state,
+          links: state.links.concat(action.payload),
+        };
 
-            const files = state.files.filter((file) => file.name !== oldFileName.name);
+      case Datatypes.UPDATE_LINK:
+        return {
+          ...state,
+          links: action.payload,
+        };
 
-            if(state.seeFile.name === oldFileName.name){
-                return {
-                ...state,
-                files: files,
-                seeFile:{
-                    name:'',
-                    url:''
+      case Datatypes.DELETE_LINK:
+        const oldLink = action.payload;
 
-                }
-                };
-            }
+        const links = state.links.filter((link) => oldLink.name !== link.name);
 
-            return {
-                ...state,
-                files:files
-            }
+        return {
+          ...state,
+          links: links,
+        };
 
+      case Datatypes.GET_FILE:
+        //En el payload de la action me llega el nombre del archivo:
+        console.log("la action es: ", action);
 
-        case Datatypes.CREATE_LINK:
+        const file = state.files.find(
+          (file) => file.id === Number(action.payload)
+        );
+        console.log("el archivo para ver es: ", file);
 
-            return {
-                ...state,
-                links:state.links.concat(action.payload)
-            }
+        return {
+          ...state,
+          seeFile: {
+            name: file!.name,
+            url: file!.url,
+          },
+        };
 
-        case Datatypes.UPDATE_LINK:
-            
-            return {
-                ...state,
-                links:action.payload
-            }
+      case Datatypes.CLEAN_FILE:
+        return {
+          ...state,
+          seeFile: {
+            name: "",
+            url: "",
+          },
+        };
 
-        case Datatypes.DELETE_LINK:
-            
+      case Datatypes.CHANGE_VIEW:
+        return {
+          ...state,
+          viewSidebar: action.payload,
+        };
 
-            const oldLink=action.payload;
+      case Datatypes.CLEAN_COURSE :
 
-            const links=state.links.filter((link) => oldLink.name !== link.name)
+          return initialCourseDetail
 
-            return {
-                ...state,
-                links:links
-            }
-
-        case Datatypes.GET_FILE:
-
-            //En el payload de la action me llega el nombre del archivo:
-            console.log('la action es: ',action)
-
-            const file = state.files.find(
-              (file) => file.id === Number(action.payload)
-            );
-            console.log('el archivo para ver es: ',file)
-
-
-            return {
-                ...state,
-                seeFile:{
-                    name:file!.name,
-                    url:file!.url
-                }
-            }
-
-        case Datatypes.CLEAN_FILE:
-
-            return {
-                ...state,
-                seeFile:{
-                    name:'',
-                    url:''
-                }
-            }
-
-        case Datatypes.CHANGE_VIEW:
-
-            return {
-                ...state,
-                viewSidebar:action.payload,
-            }
-
-        default:
-            return state;
-
+      default:
+        return state;
     }
 }

@@ -3,7 +3,7 @@ import { useDispatch,useSelector } from 'react-redux';
 import Nav from '../Nav/Nav';
 import {Container,Content, ViewFields} from './styCourse';
 import {useEffect, useState} from 'react';
-import { changeDate, getCourseDetail } from '../../redux/actions/courseDetail';
+import { changeDate, cleanCourse, getCourseDetail } from '../../redux/actions/courseDetail';
 import { State } from '../../redux/reducers';
 import { cleanFileData } from '../../redux/actions/file';
 import Sidebar from './sidebar/Sidebar';
@@ -45,6 +45,7 @@ const Course=():JSX.Element=>{
         return ()=>{
             console.log('se desmontara el componente curso!');
             dispatch(cleanFileData())
+            cleanCourse();
         }
 
     },[])
