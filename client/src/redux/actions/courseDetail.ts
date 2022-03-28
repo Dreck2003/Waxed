@@ -60,15 +60,20 @@ export const changeDate=async(id:number,date:string)=>{
 
 }
 
-export const updateSummary=async(id:number,text:string)=>{
+export const updateSummary=(id:number,text:string)=>{
 
-  try{
-    const {data}=await axios.put(URL_COURSE,{id,text})
-    if(data.error) throw new Error('error en updateSummary action');
-    console.log(data.content);
-
-  }catch(error){
-    console.log('updateSummary: ',error)
+  return async(dispatch: Dispatch)=>{
+    try {
+      const { data } = await axios.put(URL_COURSE, { id, text });
+      if (data.error) throw new Error("error en updateSummary action");
+      console.log(data.content);
+      dispatch({
+        type:Datatypes.UPDATE_SUMMARY,
+        payload:text
+      })
+    } catch (error) {
+      console.log("updateSummary: ", error);
+    }
   }
 }
 

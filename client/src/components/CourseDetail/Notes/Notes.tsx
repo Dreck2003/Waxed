@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { updateSummary } from '../../../redux/actions/courseDetail';
 import { State } from '../../../redux/reducers';
@@ -10,6 +10,7 @@ const Notes=():JSX.Element=>{
 
     const [text,setText]=useState<string>('');
     const {id}=useParams();
+    const dispatch=useDispatch();
     const notas=useSelector((state:State)=>state.courseDetail.summary);
     const state=useSelector((state:State)=>state.courseDetail);
     // let notas='hola-rata'
@@ -30,8 +31,8 @@ const Notes=():JSX.Element=>{
         event.preventDefault();
         console.log(event.target.value);
         console.log('text: ',text);
-        updateSummary(Number(id),event.target.value);
-        setText(text+event.target.value);
+        dispatch(updateSummary(Number(id), event.target.value))
+        setText(event.target.value);
     }
 
     return(

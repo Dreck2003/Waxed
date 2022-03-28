@@ -2,7 +2,6 @@ import {
   Request as Req,
   Response as Res,
   NextFunction as Next,
-  Router,
 } from "express";
 
 import prisma from '../models/prisma';
@@ -85,12 +84,22 @@ export const tachTask=async(req:Req, res:Res, next:Next) =>{
 
 export const getTasks=async(req:Req, res: Res, next: Next)=>{
 
+    const userName=req.params.id;
     try{
 
-        const tasks=await prisma.task.findMany();
-        console.log(tasks)
+        const user=await prisma.user.findUnique({
+            where:{userName:userName},
+            select:{tasks:true}
+        })
 
-        return res.send({error:null,content:tasks});
+        if(!user) return res.status(404).send({error:'user not exist'});
+
+        // const tasks=await prisma.task.findMany({
+        //     where:{userId:user.id}
+        // });
+        console.log(user)
+
+        return res.send({error:null,content:user.tasks});
 
 
     }catch(error){

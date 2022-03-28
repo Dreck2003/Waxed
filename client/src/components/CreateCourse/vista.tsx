@@ -60,7 +60,6 @@ const Vista = ({ changeVisible, visible, look }: Prop): JSX.Element => {
 
 
         }
-
     }
 
     const handleSubmit = (event: any) => {
@@ -84,7 +83,7 @@ const Vista = ({ changeVisible, visible, look }: Prop): JSX.Element => {
         // console.log(user!.userName);
         // course.append('userName',user!.userName);
 
-        dispatch(createCourse(course));
+        dispatch(createCourse(course,user!.token));
 
         //Reseteo de las inputs jajaja
 

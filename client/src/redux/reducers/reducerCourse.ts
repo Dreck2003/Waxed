@@ -111,10 +111,16 @@ export const courseDetailReducer=(state=initialCourseDetail,action:Actions):Cour
           ...state,
           viewSidebar: action.payload,
         };
+      case Datatypes.UPDATE_SUMMARY:
+        console.log('texto del summary: ',action.payload)
+        
+        return {
+          ...state,
+          summary: action.payload,
+        };
 
-      case Datatypes.CLEAN_COURSE :
-
-          return initialCourseDetail
+      case Datatypes.CLEAN_COURSE:
+        return initialCourseDetail;
 
       default:
         return state;

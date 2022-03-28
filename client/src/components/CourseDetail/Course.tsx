@@ -45,7 +45,7 @@ const Course=():JSX.Element=>{
         return ()=>{
             console.log('se desmontara el componente curso!');
             dispatch(cleanFileData())
-            cleanCourse();
+            dispatch(cleanCourse());
         }
 
     },[])
