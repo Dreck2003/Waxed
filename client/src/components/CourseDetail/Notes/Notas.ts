@@ -26,17 +26,26 @@ export const NoteText = styled.div`
   width: 100%;
   height: 100%;
   background-color: #35789d;
-  overflow: hidden;
-  overflow-y: scroll;
-  main {
+  /* overflow: hidden; */
+  /* overflow-y: scroll; */
+  textarea {
+    resize: none;
     width: 100%;
     min-height: 100%;
     padding: 5px;
     outline: none;
     border-radius: 1%;
     box-sizing: border-box;
+    background-color: #35789d;
+    color: white;
+    border: none;
   }
-  main:focus {
-    border: 3px solid #7196aa;
+  textarea:focus {
+    box-shadow: 0 0 0 3px #98bccf94;
+    /* border: 3px solid #7196aa; */
+  }
+  textarea::-webkit-scrollbar {
+    /* background-color: #24536e; */
+    width: 5px;
   }
 `;

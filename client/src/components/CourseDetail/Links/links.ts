@@ -79,9 +79,9 @@ export const List = styled.div`
       padding: 4px 8px;
       border-radius: 5px;
     }
-
-
-    
+  }
+  .newLink input:required{
+    border: 2px solid red;
   }
 `;
 

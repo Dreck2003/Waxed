@@ -16,12 +16,13 @@ export const getCourseDetail = (id:string) => {
 
       if(data.error) return console.log('error ec courseDeatil: ',data.error);
 
-      console.log('getCourseDetailt: ',data);
+      // console.log('getCourseDetailt: ',data);
       dispatch({
       type: Datatypes.FIND_COURSE,
       payload: {
         files: data.content.archive,
         links: data.content.link,
+        summary:data.content.summary,
       },
     });
 
@@ -58,3 +59,24 @@ export const changeDate=async(id:number,date:string)=>{
   }
 
 }
+
+export const updateSummary=async(id:number,text:string)=>{
+
+  try{
+    const {data}=await axios.put(URL_COURSE,{id,text})
+    if(data.error) throw new Error('error en updateSummary action');
+    console.log(data.content);
+
+  }catch(error){
+    console.log('updateSummary: ',error)
+  }
+}
+
+export const cleanCourse=()=>{
+
+  return {
+    type:Datatypes.CLEAN_COURSE,
+  }
+
+}
+
