@@ -28,14 +28,11 @@ const Nav=():JSX.Element=>{
             </span>
             {/* <input type='date'/> */}
             <span className='buttonLink' onClick={logout}>
-                SALIR
+                Salir
             </span>
             <Todo/>
             <StyleLink to='/home' className='buttonLink'>
                 Home
-            </StyleLink>
-            <StyleLink to='/about' className='buttonLink'>
-                About
             </StyleLink>
             <Create/>
         </Navegator>

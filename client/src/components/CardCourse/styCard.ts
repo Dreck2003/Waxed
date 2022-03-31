@@ -7,8 +7,21 @@ export const Course = styled.section`
   border-radius: 10px;
   overflow: hidden;
   background-color: #d7e2e8;
-  cursor: pointer;
+  /* cursor: pointer; */
   position: relative;
+
+  b{
+    position: absolute;
+    top:-5px;
+    right:0px;
+    border: 2px solid blue;
+    z-index: 5;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 5px;
+    cursor: pointer;
+  }
 
   .imagen {
     width: 100%;
@@ -20,6 +33,7 @@ export const Course = styled.section`
       height: 100%;
       aspect-ratio: 16/9;
       transition: transform 0.5s ease, opacity 0.5s ease;
+      cursor: pointer;
       /* opacity: 0.94; */
       &:hover {
         transform: scale(1.1);

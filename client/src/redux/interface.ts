@@ -22,6 +22,7 @@ export enum Datatypes {
   CLEAN_COURSE,
   UPDATE_SUMMARY,
   CLEAN_TASKS,
+  DELETE_COURSE,
 }
 
 export interface Course {
@@ -31,6 +32,7 @@ export interface Course {
   // id:number,
   files: Archive[]| null;
   links: Link[] | [] | null;
+  id:number
 }
 
 
@@ -103,6 +105,11 @@ export interface FIND_COURSE {
 export interface GET_COURSES {
   type: Datatypes.GET_COURSES;
   payload: Course[];
+}
+
+export interface DELETE_COURSE{
+  type: Datatypes.DELETE_COURSE;
+  payload:Course
 }
 
 
@@ -215,4 +222,5 @@ export  type Actions =
   | UPDATE_SUMMARY
   | SAVE_USER
   | USER_LOGOUT
-  | CLEAN_TASKS;
+  | CLEAN_TASKS
+  |DELETE_COURSE

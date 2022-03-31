@@ -6,7 +6,7 @@ export const Navegator = styled.nav`
   height: 60px;
   background-color: #2b6e93;
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr  1fr 1fr 1fr 1fr;
   align-items: center;
   justify-items: center;
   position: sticky;

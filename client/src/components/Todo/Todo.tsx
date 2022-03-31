@@ -104,7 +104,7 @@ const Todo=()=>{
                                 return (
                                     <div key={task.id} style={color}>
                                         <span onClick={tacharTask} id={task.id.toString()}>
-                                            {task.text} {task.tach.toString()}
+                                            {task.text} 
                                         </span>
                                         {/* <img src='../../../assets/icons/check.svg' alt='check' /> */}
                                         <img src='../../../assets/icons/trash.svg' alt='delete' id={task.id.toString()} onClick={tasKDelete}/>
@@ -112,7 +112,7 @@ const Todo=()=>{
                                 )
                             })
                             :
-                            <span>Not have tasks</span>
+                            <span className="not">Not have tasks</span>
 
                         }
 

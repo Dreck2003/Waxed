@@ -9,13 +9,15 @@ export const Container = styled.div`
   background-color: #5088a7;
 
   main {
-    height: 100%;
+    height: 90vh;
+    min-height: 90vh;
     width: 100%;
     display: flex;
     flex-direction: row;
     position: relative;
     div.cards {
       height: 100%;
+      width: 100%;
       display: flex;
       align-items: center;
       flex-wrap: wrap;
@@ -27,6 +29,9 @@ export const Container = styled.div`
     /* grid-column: 1/2; */
 
     span {
+      color: white;
+      position: absolute;
+      margin: auto;
       /* color:white; */
     }
   }

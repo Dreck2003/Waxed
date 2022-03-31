@@ -16,7 +16,10 @@ const FileList = (): JSX.Element => {
     const { id } = useParams();
     const archivos = useSelector((state: State) => state.courseDetail.files);
     const user = useSelector((state: State) => state.user);
+    const course=useSelector((state:State)=>state.courses.find(course=>course.id === Number(id)));
+    // const course=courses.find(curso=>)
     console.log('los links son: ', archivos);
+    console.log('El curso es:  ',course)
 
 
     const heigth = !add ? {
@@ -41,7 +44,6 @@ const FileList = (): JSX.Element => {
         // event.target.urlLink.value = '';
         console.log(event)
         const sendData = new FormData(event.target);
-        sendData.append('userName',user!.userName);
 
         dispatch(createFile(sendData));
 
@@ -99,7 +101,9 @@ const FileList = (): JSX.Element => {
 
                         <form className='newLink' style={heigth} autoComplete='off' onSubmit={createFileEvent}>
                             <InputCrud type='text' name='nameFile' placeholder='name' required />
+                            <input type='hidden' value={course!.name} name='courseName' style={{ display: 'none' }} />
                             <input type='hidden' value={id} name='courseId' style={{ display: 'none' }} />
+                            <input type='hidden' value={user?.userName} name='userName' style={{ display: 'none' }} />
                             <InputCrud type='file' name='miFile' placeholder='file' required accept='.pdf' />
                             <button>Create</button>
                         </form>
