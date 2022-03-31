@@ -2,8 +2,20 @@ import {Request,Response,NextFunction} from 'express';
 import prisma from '../models/prisma';
 import multer from 'multer';
 import fs from 'fs';
+import jwt from 'jsonwebtoken';
 
 const Corte = "http://localhost:3001";
+const srcToUrl = (src: string) => {
+  const data = src.split(`${"\\"}`).slice(1).join("/");
+  console.log("data: ", data);
+  return `${Corte}/${data}`;
+};
+
+console.log('EL PROCESO SECRET ES ::::::::::: ',process.env);
+
+interface JWTPayload{
+  id:string
+}
 
 
 var storage = multer.diskStorage({
@@ -58,26 +70,35 @@ export const createCourse= async (req: any, res: Response, next: NextFunction)=>
     const {path}=req.file;
     // console.log('el path de la imagen es: ',path)
     const {name,content,userName,date}=req.body;
+    const auth=req.get('authorization');
     
-    const srcToUrl = (src: string) => {
-      const data = src.split(`${"\\"}`).slice(1).join("/");
-      console.log('data: ',data)
-      return `${Corte}/${data}`;
-    };
-
-    console.log('parameters: ',name,content,userName,date)
+    console.log('parameters: ',name,content,userName,date);
+    let TOKEN=null;
     try{
-      const user=await prisma.user.findUnique({
-        where:{userName}
-      })
 
-      console.log('el usuario es: ',user)
-      console.log('y su id es: ',user!.id)
+      if(auth && auth.toLowerCase().startsWith('bearer')){
+
+        TOKEN=auth.substring(7);
+      }
+      const decoded = jwt.verify(
+        TOKEN,
+        process.env.SECRET || "secreto?"
+      ) as JWTPayload;
+
+      if(!TOKEN || !decoded.id){
+        return res.status(401).send({error:'token missing or invalid'});
+      }
+      
+      const userId=decoded.id;
+      const user = await prisma.user.findUnique({
+        where: { id: Number(userId) },
+      });
+
+      // console.log('el usuario es: ',user)
+      // console.log('y su id es: ',user!.id)
       if(!user) return res.send({error:'user not exist', content:null});
 
-      console.log('body: ',req.body);
-      console.log('path: ',path);
-      console.log('el true path: ',srcToUrl(path))
+      // console.log('body: ',req.body);
       const newCourse = await prisma.course.create({
         data: {
           name: name,

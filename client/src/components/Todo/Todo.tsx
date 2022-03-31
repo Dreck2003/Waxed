@@ -22,12 +22,13 @@ const Todo=()=>{
     const [vist,setVist]=useState<boolean>(false);
     const dispatch=useDispatch();
     const tasks=useSelector((state:State)=>state.tasks);
+    const user=useSelector((state:State)=>state.user)
 
     useEffect(() =>{
 
         console.log('las tareas con : ',tasks)
         if(tasks && !tasks.length){
-            dispatch(getTasks());
+            dispatch(getTasks(user!.userName));
         }
     },[]);
 
@@ -37,7 +38,7 @@ const Todo=()=>{
         if(!(event.target.text.value)){
             alert('Falta the task');
         }else{
-            dispatch(createTask(event.target.text.value));
+            dispatch(createTask(event.target.text.value,user!.userName));
             event.target.text.value='';
         }
     }
@@ -103,7 +104,7 @@ const Todo=()=>{
                                 return (
                                     <div key={task.id} style={color}>
                                         <span onClick={tacharTask} id={task.id.toString()}>
-                                            {task.text} {task.tach.toString()}
+                                            {task.text} 
                                         </span>
                                         {/* <img src='../../../assets/icons/check.svg' alt='check' /> */}
                                         <img src='../../../assets/icons/trash.svg' alt='delete' id={task.id.toString()} onClick={tasKDelete}/>
@@ -111,7 +112,7 @@ const Todo=()=>{
                                 )
                             })
                             :
-                            <span>Not have tasks</span>
+                            <span className="not">Not have tasks</span>
 
                         }
 

@@ -29,7 +29,7 @@ const Home =():JSX.Element=>{
             <main>
 
                 <div className='cards'>
-                    {estado.length ? estado.map((curso:any) => {
+                    {estado && estado.length ? estado.map((curso:any) => {
                         // console.log(curso)
                         return (
                             <Card key={curso.name} img={curso.img!} info={curso.content!} name={curso.name!} date={curso.date} id={curso.id}/>

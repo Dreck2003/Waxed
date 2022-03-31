@@ -34,6 +34,7 @@ export const Content = styled.article`
   border-radius: 8px;
   padding: 10px;
   background-color: #3e80a5;
+  z-index: 10;
 
   header {
     width: 100%;
@@ -93,7 +94,7 @@ export const List = styled.div`
     text-align: center;
     border: 2px solid white;
     border-radius: 6px;
-    
+
     /* text-decoration: line-through; */
     /* opacity: 0.7; */
     span {
@@ -107,6 +108,11 @@ export const List = styled.div`
   div:focus {
     text-decoration: line-through;
     /* background-color:red; */
+  }
+  span.not {
+    position: absolute;
+    margin: auto;
+    transform: translate(210%, 50%);
   }
 `;
 

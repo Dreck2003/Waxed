@@ -27,6 +27,9 @@ export const reducerTask = (state:Tasks=[],action:Actions):Tasks =>{
             console.log(" new state: ", copyArray);
 
             return [...copyArray];
+        case Datatypes.CLEAN_TASKS:
+
+            return [];
 
         default:
             return state

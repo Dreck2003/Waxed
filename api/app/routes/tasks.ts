@@ -4,7 +4,7 @@ const router = Router();
 
 console.log('empieza a leer tasks')
 
-router.get('/',getTasks);
+router.get('/:id',getTasks);
 router.post('/',createTask);
 router.put('/',tachTask);
 router.delete('/:id',deleteTask);

@@ -6,10 +6,10 @@ import { Dispatch } from "redux";
 const URL_TASK = "http://localhost:3001/api/tasks";
 
 
-export const getTasks = () => {
+export const getTasks = (userName:string) => {
   return async (dispatch: Dispatch) => {
     try {
-      const { data } = await axios.get(URL_TASK);
+      const { data } = await axios.get(URL_TASK+'/'+userName);
 
       if (data.error) throw new Error("existe un error en getTasks");
 
@@ -24,10 +24,10 @@ export const getTasks = () => {
   };
 };
 
-export const createTask = ( text : string) => {
+export const createTask = ( text : string,userName:string) => {
   return async (dispatch: Dispatch) => {
     try {
-      const { data } = await axios.post(URL_TASK, { text });
+      const { data } = await axios.post(URL_TASK, { text,userName });
 
       if (data.error) throw new Error("createTask");
 
@@ -81,13 +81,17 @@ export const tachTask=(id:number,tach:boolean)=>{
         payload:data.content
       })
 
-
     }catch(error){
       console.log('eror tachTask');
     }
+  }
 
+}
 
+export const cleanTasks=()=>{
 
+  return {
+    type:Datatypes.CLEAN_TASKS
   }
 
 }
