@@ -46,7 +46,7 @@ We can create a todo, mark them as completed and delete it.
 
 <b>
 If you want to see a video about this project I invite you to see it on my
-<a href='https://www.linkedin.com/feed/update/urn:li:activity:6916778786877235200'>
+<a href='https://www.linkedin.com/feed/update/urn:li:activity:6916778786877235200' target='__blank'>
   linkedin🧨
 </a>
   </b>
