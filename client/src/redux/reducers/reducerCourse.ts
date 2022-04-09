@@ -23,10 +23,25 @@ export const courseDetailReducer=(state=initialCourseDetail,action:Actions):Cour
         };
 
       case Datatypes.CREATE_FILE:
+        const newcourse=action.payload;
+        const newArray=[...state.files];
+        const findIndex=newArray.findIndex(course=>course.name===newcourse.name);
+        console.log('Arraty state: ',state.files);
+        console.log('LA copia del array: ',newArray);
+        console.log('EL index fue encontrado: ',findIndex);
+
+        if(findIndex !== -1){
+          newArray[findIndex]=newcourse;
+          return {
+            ...state,
+            files: [...newArray]
+          };
+        }
         return {
           ...state,
-          files: state.files.concat(action.payload),
-        };
+          files: state.files.concat(newcourse)
+        }
+
 
       case Datatypes.UPDATE_FILE:
         return {

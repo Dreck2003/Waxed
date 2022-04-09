@@ -1,11 +1,12 @@
 import { ListLink, Headers } from "./StyListas";
 import { InputCrud } from './links';
-import { useState } from "react";
+import {  useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { State } from "../../../redux/reducers";
 import { Archive } from '../../../redux/interface';
 import { createFile, deleteFile, getFileData } from '../../../redux/actions/file';
 import { useParams } from 'react-router-dom';
+import Swal from 'sweetalert'
 
 
 const FileList = (): JSX.Element => {
@@ -31,7 +32,7 @@ const FileList = (): JSX.Element => {
 
     }
 
-    const createFileEvent = (event: React.ChangeEvent<HTMLFormElement>) => {
+    const createFileEvent = async(event: React.ChangeEvent<HTMLFormElement>) => {
 
         event.preventDefault();
 
@@ -44,9 +45,29 @@ const FileList = (): JSX.Element => {
         // event.target.urlLink.value = '';
         console.log(event)
         const sendData = new FormData(event.target);
+        const courseName=sendData.get('nameFile');
+        console.log('ARCHIVO ENCONTRADO: ',courseName)
+        const encountered=archivos.findIndex(archive=>archive.name===courseName);
 
-        dispatch(createFile(sendData));
+        if(encountered == -1){
+            if (/[^a-z\x20]/.test(courseName as string)){
+                Swal({
+                    title:"The field cannot have signs",
+                    text: 'Write another name',
+                    icon:'error'
+                })
+            }else{
 
+                dispatch(createFile(sendData));
+            }
+
+        }else{
+            Swal({
+                title:'The file exist',
+                text:'Write another name',
+                icon:'error'
+            });
+        }
     }
 
     const ReadFile = (event: any) => {
@@ -64,16 +85,14 @@ const FileList = (): JSX.Element => {
     }
 
     const FileDelete = (event: any) => {
-
         dispatch(deleteFile(event.target.id,))
-
-
     }
 
     return (
         <>
             <ListLink>
                 <div className='listFormLinks'>
+                    
                     <Headers>
                         <span>Files</span>
                         <img src='../assets/icons/add.svg' onClick={clickAdd} />
@@ -85,7 +104,7 @@ const FileList = (): JSX.Element => {
                                 return (
                                     <div key={file.id} style={{ width: '100%', textAlign: 'center' }} className='container_links'>
                                         <span>{++i}</span>
-                                        <span onClick={ReadFile} id={file.id}>
+                                        <span onClick={ReadFile} id={file.id.toString()}>
                                             {file.name}
                                         </span>
                                         <div>

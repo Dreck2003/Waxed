@@ -12,7 +12,7 @@ export const createCourse = ( curso: any,token:string)=> {
     try{
       console.log(curso);
       console.log("envio de datos!!");
-
+      
       const {data}= await axios({
         method:'POST',
         url:URL,
@@ -23,14 +23,22 @@ export const createCourse = ( curso: any,token:string)=> {
         }
 
       })
-      if (data.error)
+      if (data.error){
+        swal({
+          title:'Space creation error',
+          icon:'warning'
+        })
         return console.log("existe error createCourse: ", data.error);
+      }
       console.log(data.content)
       dispatch({
         type: Datatypes.CREATE_COURSE,
         payload: data.content,
       });
-      swal('Hello World');
+      swal({
+        title:'Space was created',
+        icon:'success'
+      });
 
     }catch(error:any){
       console.log(error.message)
@@ -73,14 +81,38 @@ export const deleteCourse=(id:number,token:string) => {
         }
       };
 
-      const {data}=await axios.delete(URL+`/delete/${id}`,config);
-
-      if(data.error)throw new Error(data.error);
-
-      dispatch({
-        type:Datatypes.DELETE_COURSE,
-        payload:data.content
+      swal({
+        title: "Are you sure?",
+        text: "Once deleted , you will not be able recover this Space!",
+        icon: "warning",
+        buttons: ["No", 'Yes'],
+        dangerMode: true,
       })
+      .then(async(created)=>{
+
+        if(created){
+
+          const {data}=await axios.delete(URL+`/delete/${id}`,config);
+    
+          if(data.error){
+            swal({
+              title:'Space deletion failed',
+              icon:'warning'
+            })
+            throw new Error(data.error);
+          }
+          dispatch({
+            type:Datatypes.DELETE_COURSE,
+            payload:data.content
+          })
+          swal({
+            title:'Deleted Space',
+            icon:'success'
+          })
+        }
+      })
+
+
 
 
     }catch(error){

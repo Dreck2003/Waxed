@@ -4,7 +4,6 @@ import prisma from '../models/prisma';
 import bcrypt from 'bcrypt' ;
 import jwt from 'jsonwebtoken';
 
-
 export const createUser= async(req: Request, res: Response, next: NextFunction)=>{
 
     console.log(req.body);
@@ -38,7 +37,9 @@ export const createUser= async(req: Request, res: Response, next: NextFunction)=
 
              const token = jwt.sign(
                userToken,
-               process.env.SECRET || "secreto?"
+               process.env.SECRET || "secreto?",{
+                 expiresIn:60*60*2// 2 days
+               }
              );
 
 
@@ -56,7 +57,7 @@ export const createUser= async(req: Request, res: Response, next: NextFunction)=
             return res.send({error:'User already exists',content:null})
         }
 
-    }catch(err){
+    }catch(err:any){
         httpError(res,err)
 
     }
@@ -89,7 +90,9 @@ export const getUser= async(req: Request, res: Response, next: NextFunction)=>{
 
         }
 
-        const token=jwt.sign(userToken,process.env.SECRET|| 'secreto?')
+        const token = jwt.sign(userToken, process.env.SECRET || "secreto?", {
+          expiresIn: 60 * 60 * 2,//2 days
+        });
 
         console.log('pass: ',isCorrectPass);
         console.log("user : ", user);
@@ -100,10 +103,10 @@ export const getUser= async(req: Request, res: Response, next: NextFunction)=>{
             name:user!.name,
         }});
 
-    }catch(err){
+    }catch(err:any){
 
         const error:string='El usuario no fue encontrado';
-        httpError(res,error)
+        httpError(res,err)
     }   
 }
 

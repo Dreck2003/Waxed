@@ -36,7 +36,7 @@ const Home =():JSX.Element=>{
                         )
                     })
                         :
-                        <span>You don't have courses </span>
+                        <span>You don't have spaces </span>
                     }
                 </div>
             </main>

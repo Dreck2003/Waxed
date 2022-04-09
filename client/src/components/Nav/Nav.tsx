@@ -23,17 +23,15 @@ const Nav=():JSX.Element=>{
 
     return (
         <Navegator>
-            <span>
+            <i>
+                {/* <img src='../../../assets/images/logo.png'/> */}
                 WAXED
-            </span>
+            </i>
             {/* <input type='date'/> */}
             <span className='buttonLink' onClick={logout}>
                 Salir
             </span>
             <Todo/>
-            <StyleLink to='/home' className='buttonLink'>
-                Home
-            </StyleLink>
             <Create/>
         </Navegator>
     )

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const TodoBar = styled.section`
     width: 100%;
-    background-color:#2b6e93;
+    /* background-color:#2b6e93; */
     /* height: 100%; */
     /* grid-column: 2/3; */
 `;

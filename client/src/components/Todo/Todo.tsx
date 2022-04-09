@@ -3,6 +3,7 @@ import { Aside, Content, Header, List, Modal, TodoBar } from "./StyTodo";
 import {createTask, deleteTask, getTasks, tachTask} from '../../redux/actions/task';
 import { useDispatch, useSelector } from "react-redux";
 import { State } from "../../redux/reducers";
+import Swal from "sweetalert";
 
 
 interface Style{
@@ -36,7 +37,10 @@ const Todo=()=>{
         event.preventDefault();
 
         if(!(event.target.text.value)){
-            alert('Falta the task');
+            Swal({
+                title:'Empty field',
+                icon:'error'
+            })
         }else{
             dispatch(createTask(event.target.text.value,user!.userName));
             event.target.text.value='';
@@ -117,7 +121,7 @@ const Todo=()=>{
                         }
 
                     </List>
-                    <Aside onSubmit={sendTask}>
+                    <Aside onSubmit={sendTask} autoComplete='off'>
                         <input type='text' placeholder='New Todo' name="text"/>
                         <button>Add Task</button>
                     </Aside>
