@@ -2,6 +2,7 @@ import {Datatypes,Archive,Course} from '../interface';
 import {Dispatch} from 'redux'
 import localforage from 'localforage';
 import axios from 'axios';
+import Swal from 'sweetalert';
 
 type Curso = Course | null;
 
@@ -19,14 +20,26 @@ export const createFile = (formData:any) => {
         body: formData,
       });
       const data = await response.json();
+      
 
-      if(data.error) return console.log('createFile: ',data.error);
+      if(data.error){
+        alert(data.error);
+        Swal({
+          title:'Opps an error ocurred',
+          icon:'error'
+        });
 
+        return console.log('createFile: ',data.error);
+      } 
 
       dispatch({
         type: Datatypes.CREATE_FILE,
         payload: data.content,
       });
+      Swal({
+        title:'Created file',
+        icon:'success'
+      })
 
       console.log(data);
       // dispatch(createFile(data.nameFile));
@@ -43,17 +56,40 @@ export const deleteFile=(fileId:number)=>{
 
     try{
 
-        const { data } = await axios.delete(URL_FILE, {
-          data: { fileId: Number(fileId) },
-        });
-
-
-      if(data.error) return console.log('deleteFIle: ',data.error)
-
-      dispatch({
-        type:Datatypes.DELETE_FILE,
-        payload:data.content
+      Swal({
+        title:'Are you sure?',
+        text:'Once deleted , you will not be able recover this file!',
+        icon:'warning',
+        buttons:['No','Yes'],
+        dangerMode:true
       })
+      .then(async(deleted)=>{
+        if(deleted){
+          
+            const { data } = await axios.delete(URL_FILE, {
+              data: { fileId: Number(fileId) },
+            });
+  
+          if(data.error){
+            Swal({
+              title:'File deletion failed',
+              icon:'warning'
+            });
+            return console.log('deleteFIle: ',data.error)
+          } 
+      
+          dispatch({
+            type:Datatypes.DELETE_FILE,
+            payload:data.content
+          })
+          Swal({
+            title:'Deleted file',
+            icon:'success'
+          })
+        }
+      })
+
+
 
 
     }catch(error){

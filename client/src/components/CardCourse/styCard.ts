@@ -13,8 +13,7 @@ export const Course = styled.section`
   b{
     position: absolute;
     top:-5px;
-    right:0px;
-    border: 2px solid blue;
+    right:5px;
     z-index: 5;
     color: white;
     font-size: 1.2rem;

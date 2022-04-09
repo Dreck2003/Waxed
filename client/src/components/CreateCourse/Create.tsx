@@ -15,7 +15,7 @@ const Create=():JSX.Element=>{
         <Container >
             <div className='buttonLink' onClick={() => setVisible(!visible)}>
                 <span >
-                    Create Course
+                    Create Space
                 </span>
             </div>
             <Vista changeVisible={setVisible} visible={visible} look={visible}/>

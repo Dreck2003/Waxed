@@ -43,9 +43,7 @@
   align-items: center;
 }
 
-body{
-  /* min-height: 100vw; */
-}
+
 
 .App-link {
   color: #61dafb;
@@ -70,12 +68,48 @@ button {
   text-align: center;
   padding: 10px 20px;
   /* border: 2px solid #75a4dc; */
-  border-radius: 10px;
+  border-radius:6px;
   font-weight: bold;
-  /* background-color:red; */
+  background-color:#5e74a5;
+  /* transition: box-shadow 1s ease ; */
+  cursor:pointer
 }
 
-.buttonLink:hover{
-  background-color:#75a4dc;
-  cursor:pointer
+.buttonLink:active{
+  /* background-color:#2d426f; */
+  box-shadow: 0px 0px 1px 3px #7283a9;
+  /* padding: 9px 11px; */
+}
+
+.is-invalid-input{
+  /* outline: 5px solid red !important; */
+  /* border: auto; */
+  /* box-sizing: border-box; */
+  /* box-shadow: 0px 0px 0px 3.5px #dc5050ab; */
+  border: 1.4px solid #e74c3c !important ;
+}
+.is-invalid-input:focus{
+  box-shadow: 0 0 0 0.25rem rgb(231 76 60 / 25%);
+}
+
+.danger{
+  padding: 0px 20px;
+  height: 40px;
+  background-color: #dc913e;
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.is-invalid input{
+  border: 1.4px solid #e74c3c !important;
+
+}
+.is-invalid input:focus {
+  box-shadow: 0 0 0 0.25rem rgb(231 76 60 / 25%);
+}
+.is-invalid b{
+  visibility: visible !important;
 }

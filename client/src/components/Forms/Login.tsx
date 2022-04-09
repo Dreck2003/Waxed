@@ -1,10 +1,11 @@
 // import GoogleLogin from 'react-google-login';
-import { useState,useEffect } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { validator,} from '../../helpers/validateForm';
+import { validateInfo, validator,} from '../../helpers/validateForm';
 import { Input, GroupCol, Header } from './styled';
 import { getUser } from '../../redux/actions/user';
+import Swal from 'sweetalert';
 
 
 
@@ -21,19 +22,27 @@ const Login = () => {
         password: ''
     })
 
-    useEffect(()=>{
-        console.log('login')
-
-    },[])
 
     const sendSubmit=(event:React.ChangeEvent<HTMLFormElement>)=>{
         event.preventDefault();
 
-        console.log('36- enviando los datos del login')
-        dispatch(getUser(inputLogin));
+        const res=validateInfo(error,inputLogin);
+        // console.log('aprobado? : ',res);
+        if(!res.length){
+
+            dispatch(getUser(inputLogin));
+        }else{
+
+            Swal({
+                title:res[0],
+                icon:'warning' 
+            })
+        }
 
     }
 
+    let errorDivName = error.userName ? 'is-invalid' : '';
+    let errorDivPass = error.password ? 'is-invalid' : '';
 
     return (
         <form autoComplete='off' 
@@ -50,11 +59,21 @@ const Login = () => {
         }}
             onSubmit={sendSubmit}
         >
-            {console.log('login renderizado')}
+            {/* {console.log('login renderizado')} */}
             <Header>Login</Header>
             <GroupCol>
-                <Input type='text' placeholder='userName...' name='userName'/>
-                <Input type='password' placeholder='Password...' name='password'/>
+                <div className={errorDivName} title={error.userName }>
+                    <Input type='text' placeholder='Username...' name='userName'  />
+                    <b >
+                        !
+                    </b>
+                </div>
+                <div className={errorDivPass} title={error.password}>
+                    <Input type='password' placeholder='Password...' name='password'  />
+                    <b >
+                        !
+                    </b>
+                </div>
                 {/* <GoogleLogin
                     clientId="654888355257-epmhucsr0u7d6baq48r3t3794267ub5u.apps.googleusercontent.com"
                     buttonText="Login"
@@ -65,7 +84,7 @@ const Login = () => {
                     onFailure={failed}
                     cookiePolicy={'single_host_origin'}
                 /> */}
-                <button>
+                <button >
                     Submit
                 </button>
             </GroupCol>

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createCourse } from '../../redux/actions/course';
 import { State } from '../../redux/reducers/index';
 import { dateToString } from '../../helpers/date';
+import Swal from 'sweetalert';
 
 
 
@@ -16,31 +17,26 @@ interface Prop {
 interface Course {
     name: string,
     content?: string,
-}
-
-export interface Curso {
-    name: string;
-    content: string | null;
-    img?: any;
-
+    image:any
 }
 
 
-
-const URL: string = 'http://localhost:3001/api/courses'
 
 
 const Vista = ({ changeVisible, visible, look }: Prop): JSX.Element => {
 
     const dispatch = useDispatch();
-    const user = useSelector((state: State) => state.user)
+    const user = useSelector((state: State) => state.user);
+    const courses=useSelector((state:State)=>state.courses);
 
     const [img, setImg] = useState<any>(null);
     const [input, setInput] = useState<Course>({
         name: '',
+        image:''
     });
     const [error, setError] = useState<Course>({
         name: '',
+        image:''
     });
 
     let width = look ? '400px' : '0px';
@@ -55,49 +51,98 @@ const Vista = ({ changeVisible, visible, look }: Prop): JSX.Element => {
         })
 
         if (event.target.name !== 'content') {
-            setError(validator(error, event.target))
+            setError(validator(error, event.target));
+            
         } else {
 
 
         }
+
     }
 
     const handleSubmit = (event: any) => {
         event.preventDefault();
-        console.log('fomr: ', event)
+        console.log('fomr: ', event);
+        const course = new FormData(event.target);
+
+        const file = course.get('image');
+            console.log('archivo:  ',file)
+        if (!file) {
+            setError({
+                ...error,
+                image: 'The file not exist!'
+            })
+            return null;
+        } else {
+            setError({
+                ...error,
+                image: ''
+            })
+        }
 
         if (!(user!.name)) return console.error('handleSUbmit:vista');
+        const res= validateInfo(error,input);
 
-        if (validateInfo(error, input).length > 0) {
-            return alert('existen erroes o faltan campos a completar')
+        if (res.length > 0) {
+            console.log(res);
+            Swal({
+                title:'Request paused',
+                text:res[0],
+                icon:'warning'
+            })
+            return null;
         }
 
         if (event.target.content.value.length > 160) {
-            alert('The course description should not be longer than 160 letters')
+            Swal({
+                title:'Error',
+                text:'he course description should not be longer than 160 letters',
+                icon:'warning'
+            })
         }
 
-        const course = new FormData(event.target);
         let day:any=new Date();
         day=day.toString();
         course.append('date', dateToString(day));
-        // console.log(user!.userName);
-        // course.append('userName',user!.userName);
 
-        dispatch(createCourse(course,user!.token));
+        const nameCourse = course.get('name');
+        console.log(file)
+        if (/[^a-z\x20]/.test(nameCourse as string)){
+            setError({
+                ...error,
+                name: "The field cannot have signs"
+            })
+            return null;
 
-        //Reseteo de las inputs jajaja
+        }
+        
+        const findCourse=courses.find(course=>course.name===nameCourse);
 
-        event.target.content.value = '';
-        event.target.name.value = '';
+        if(findCourse){
+            Swal({
+                title:'The course already exists',
+                icon:'warning'
+            });
 
-        setInput({
-            ...input,
-            name: ''
-        })
-        setImg(null);
-        const files = Array.from(event.target.image.files)
-        files[0] = undefined;
+        }else{
 
+            // console.log(user!.userName);
+            // course.append('userName',user!.userName);
+    
+            dispatch(createCourse(course,user!.token));
+            //Reseteo de las inputs jajaja
+    
+            event.target.content.value = '';
+            event.target.name.value = '';
+    
+            setInput({
+                ...input,
+                name: ''
+            })
+            setImg(null);
+            const files = Array.from(event.target.image.files)
+            files[0] = undefined;
+        }
 
     }
 
@@ -111,6 +156,8 @@ const Vista = ({ changeVisible, visible, look }: Prop): JSX.Element => {
 
     }
 
+    let stylesName = error.name ? 'is-invalid error' : 'error';
+    let stylesContent = error.content ? 'is-invalid-input' : '';
 
     return (
         <Aside >
@@ -123,10 +170,15 @@ const Vista = ({ changeVisible, visible, look }: Prop): JSX.Element => {
                     onSubmit={handleSubmit}
                     onChange={handleChange}
                 >
-                    <header>Create the Course</header>
-                    <Input type='text' placeholder='Course name...' name='name' />
-                    <TextArea placeholder='Description of course...' name='content' />
-                    <input type='hidden' value={user!.userName} name='userName' />
+                    <header>Create your Space</header>
+                    <div title={error.name} className={stylesName}>
+                        <Input type='text' placeholder='Space name...' name='name'  />
+                        <b>
+                            !
+                        </b>
+                    </div>
+                    <TextArea placeholder='Description of Space...' name='content' title={error.content} className={stylesContent}/>
+                    <input type='hidden' value={user!.userName} name='userName'/>
                     <SubFile >
                         <span>Add Image</span>
                         <i>+</i>
@@ -146,6 +198,7 @@ const Vista = ({ changeVisible, visible, look }: Prop): JSX.Element => {
                     <div>
                         {img ? <img src={img} /> : <span>preview of the image</span>}
                     </div>
+                    {error.image && <b>{error.image}</b>}
                     <Buttons>
                         <button className='btn-crear' >Crear</button>
                         <input className='btn-crear' type='reset' value='Reset' onClick={reseteo} />

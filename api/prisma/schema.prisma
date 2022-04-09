@@ -18,15 +18,18 @@ model User {
   lastName String
   userName String   @unique
   email    String   @unique
-  password String   @unique
+  passwordHash String   @unique
   course   Course[]
+  tasks    Task[]
 }
 
 model Course {
-  id       Int       @default(autoincrement())
-  name     String    @id @unique
-  content  String?
-  img      String
+  id       Int       @id @default(autoincrement())
+  name     String    
+  content  String    @default("")
+  img      String    @default("http://localhost:3001/default.jpg")
+  summary  String    @default("")
+  date     String    
 
   user     User      @relation(fields: [userId], references: [id])
   
@@ -40,11 +43,11 @@ model Course {
 model Archive {
   id       Int      @id @default(autoincrement())
   
-  name     String   @unique
+  name     String   
   url      String   
   
-  course   Course   @relation(fields: [courseId], references: [name])
-  courseId String //RElacion con el nombre del curso el id es el nombre
+  course   Course?   @relation(fields: [courseId], references: [id])
+  courseId Int //RElacion con el nombre del curso el id es el nombre
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
 
@@ -53,10 +56,10 @@ model Archive {
 model Link {
   id       Int      @id @default(autoincrement())
   url      String   
-  name     String   @unique
+  name     String   
 
-  course   Course   @relation(fields: [courseId], references: [name])
-  courseId String
+  course   Course   @relation(fields: [courseId], references: [id])
+  courseId Int
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
 }
@@ -66,6 +69,8 @@ model Task{
   id    Int @id @default(autoincrement()) 
   text  String 
   tach  Boolean @default(false)
+  user  User @relation(fields: [userId],references:[id])
+  userId Int
 
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt

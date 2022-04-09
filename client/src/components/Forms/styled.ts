@@ -44,16 +44,27 @@ export const Input = styled.input`
     margin:5px;
     border:none;
     outline: none;
+    width: calc(100% - 10px);
 `
 
-export const GroupRow=styled.div`
-    margin-top:20px;
-    width:96%;
-    padding:5px 10px;
-    display: flex;
-    flex-direction: row;
-
-`
+export const GroupRow = styled.div`
+  margin-top: 20px;
+  /* width: 96%; */
+  padding: 5px 10px;
+  display: flex;
+  flex-direction: row;
+  div {
+    width: 100%;
+    position: relative;
+    b {
+      position: absolute;
+      right: 0;
+      color: red;
+      visibility: hidden;
+      transform: translate(-300%, 50%);
+    }
+  }
+`;
 
 export const GroupCol=styled.div`
     padding:5px 0px;
@@ -61,6 +72,18 @@ export const GroupCol=styled.div`
     margin:10px 2%;
     display: flex;
     flex-direction: column;
+    div{
+        width: 100%;
+        position: relative;
+        b{
+            position: absolute;
+            right: 0;
+            color: red;
+            visibility: hidden;
+            transform: translate(-300%,50%);
+        }
+    }
+    
 `
 
 export const ChangeForm=styled.div`

@@ -2,6 +2,7 @@ import { Request as Req, Response as Res, NextFunction as Next } from "express";
 import multer from "multer";
 import fs from "fs";
 import prisma from "../models/prisma";
+import { ExistFile } from "../helpers/file";
 
 const Corte = "http://localhost:3001/";
 
@@ -9,6 +10,7 @@ const srcToUrl = (src: string) => {
   const data = src.split(`${"\\"}`).slice(1).join("/");
   return Corte + data;
 };
+
 
 const pathDelete=(path:string) => {
 
@@ -21,17 +23,18 @@ const secreto = "FOO";
 
 let storage = multer.diskStorage({
   destination: (req: Req, file, cb) => {
-    const { courseId,userName } = req.body;
-    console.log(req.body);
+    const { courseName,userName } = req.body;
+    console.log('BODY DEL STORAGE FILE CREATE:  ',req.body);
 
-    let curso = courseId ? courseId : secreto;
-    const path = `public/${userName}/${curso}/files`;
+    let curso = courseName ? courseName : secreto;
+    const path = `public/${userName}/${courseName}/files`;
 
     if (!fs.existsSync(path)) {
       console.log("no existe la ruta");
       fs.mkdirSync(path, { recursive: true });
       console.log("la hemlos creado");
     }
+    console.log('El path del archivo es: ',path)
     cb(null, path);
   },
   filename: (req: Req, file, cb) => {
@@ -47,34 +50,30 @@ export const createFile = async (req: Req, res: Res, next: Next) => {
   console.log(req.body);
   console.log(req.file!.path);
   const { nameFile, courseId } = req.body;
+  console.log(req.file);
 
   try {
-    // const fileExist = await prisma.archive.findUnique({
-    //   where: {
-    //     name: nameFile,
-    //   },
-    // });
+        
+      const newFile = await prisma.archive.create({
+        data: {
+          name: nameFile,
+          url: srcToUrl(req.file!.path),
+          course:{
+            connect:{id:Number(courseId)}
+          }
+        },
+        select: {
+          id:true,
+          name: true,
+          url: true,
+        },
+      });
+      return res.status(200).send({ error: null, content: newFile });
 
-    // if (fileExist) return res.send({ error: "The file exist" });
 
-    //Si no existe un archivo anteriormente:
-
-    const newFile = await prisma.archive.create({
-      data: {
-        name: nameFile,
-        url: srcToUrl(req.file!.path),
-        courseId: Number(courseId),
-      },
-      select: {
-        id:true,
-        name: true,
-        url: true,
-      },
-    });
-    return res.status(200).send({ error: null, content: newFile });
   } catch (err) {
     console.error("createFile: ", err);
-    return res.send({ error: err });
+    return res.send({ error: "The file was not created" });
   }
 };
 

@@ -6,6 +6,7 @@ import { State } from "../../../redux/reducers";
 import { Link } from '../../../redux/interface';
 import { createLink, deleteLink } from '../../../redux/actions/link';
 import {useParams} from 'react-router-dom';
+import Swal from 'sweetalert';
 
 
 interface Estilos {
@@ -40,10 +41,23 @@ const LinkList=(): JSX.Element => {
         event.preventDefault();
         const name = event.target.nameLink.value;
         const url = event.target.urlLink.value;
-        dispatch(createLink(name, Number(id), url));
-        setAdd(!add);
-        event.target.nameLink.value = '';
-        event.target.urlLink.value = '';
+        const linkFind=links.find(links=>links.name===name);
+        console.log('EL link es: ',linkFind)
+        if(linkFind){
+
+            
+            Swal({
+                title:'The link exist',
+                icon:'error'
+            });
+            event.target.nameLink.value = '';
+        }else{
+            
+            dispatch(createLink(name, Number(id), url));
+            setAdd(!add);
+            event.target.urlLink.value = '';
+            event.target.nameLink.value = '';
+        }
     }
 
     const clickAdd = (event: any) => {
