@@ -8,39 +8,39 @@ Is an application to have a better organization of information.With this app you
 
 Each learning space is a work environment to keep the files and links organized.
 
-<img src='./Readme/workspace.png'/>
+<img src='./Readme/workspace.PNG'/>
 
 ### Control Panel:
 
-<img src='./Readme/work.png'/>
+<img src='./Readme/work.PNG'/>
 
 ### Create and delete links and PDF files:
 
 We can create and delete the links that we want to save, with a name for each link, and in the same way with the files. We can also view the pdf's content.
 
 <center>
-<img src='./Readme/links.png' width='24%' height='500px' /><!--
---><img src='./Readme/profile.png' width='75%' height='500px'/>
+<img src='./Readme/links.PNG' width='24%' height='500px' /><!--
+--><img src='./Readme/profile.PNG' width='75%' height='500px'/>
 </center>
 
 ### Add a summary or a note:
 
 We can add a comment or summary of something we are doing or we just want to save some text.
 
-<img src='./Readme/summary.png' height='500px'/>
+<img src='./Readme/summary.PNG' height='500px'/>
 
 ### Use the calculator:
 
 It is a basic calculator that allows you to perform simple calculations
 
-<img src='./Readme/calculator.png' height='500px'/>
+<img src='./Readme/calculator.PNG' height='500px'/>
 
 
 ### Add, cross out, or delete a todo:
 
 We can create a todo, mark them as completed and delete it.
 
-<img src='./Readme/todo.png' />
+<img src='./Readme/todo.PNG' />
 
 
 
